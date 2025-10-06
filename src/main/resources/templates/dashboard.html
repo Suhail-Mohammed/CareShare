@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - JWT Auth Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">JWT Auth Demo</a>
+        <div class="navbar-nav ms-auto">
+            <span class="navbar-text me-3" th:text="'Welcome, ' + ${user.firstName} + '!'"></span>
+            <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">User Dashboard</h4>
+                </div>
+                <div class="card-body">
+                    <div th:if="${user}">
+                        <h5>User Information</h5>
+                        <table class="table">
+                            <tr>
+                                <th>Name:</th>
+                                <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+                            </tr>
+                            <tr>
+                                <th>Email:</th>
+                                <td th:text="${user.email}"></td>
+                            </tr>
+                            <tr>
+                                <th>User ID:</th>
+                                <td th:text="${user.id}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn-info" onclick="getCurrentUser()">Get Current User via API</button>
+                        <div id="apiResponse" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function logout() {
+        // Call logout API to clear cookie
+        fetch('/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include' // Important for cookies
+        })
+        .then(() => {
+            // Clear localStorage
+            localStorage.removeItem('jwtToken');
+            // Redirect to home
+            window.location.href = '/';
+        })
+        .catch(error => {
+            console.error('Logout error:', error);
+            window.location.href = '/';
+        });
+    }
+
+    function getCurrentUser() {
+        const token = localStorage.getItem('jwtToken');
+
+        fetch('/api/user/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Not authenticated');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('apiResponse').innerHTML =
+                '<div class="alert alert-success"><pre>' + JSON.stringify(data, null, 2) + '</pre></div>';
+        })
+        .catch(error => {
+            document.getElementById('apiResponse').innerHTML =
+                '<div class="alert alert-danger">Failed to fetch user data: ' + error.message + '</div>';
+        });
+    }
+
+    // Check authentication on page load
+    window.onload = function() {
+        // Try to get user data to verify authentication
+        getCurrentUser();
+    }
+</script>
+</body>
+</html>
