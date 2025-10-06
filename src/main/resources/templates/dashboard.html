@@ -1,107 +1,705 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - JWT Auth Demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard — Care & Share</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+          --primary-color: #28a745;
+          --secondary-color: #218838;
+          --accent-color: #71c787;
+          --bg-light: #f8fafc;
+          --text-dark: #1E293B;
+          --card-shadow: rgba(0,0,0,0.05);
+        }
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: var(--bg-light);
+          color: var(--text-dark);
+          padding-top: 72px;
+        }
+        .navbar-custom {
+          background: #fff;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          position: fixed;
+          width: 100%;
+          z-index: 1050;
+        }
+        .navbar-brand {
+          font-weight: 700;
+          color: var(--primary-color);
+          font-size: 1.6rem;
+          cursor: pointer;
+        }
+        .navbar-brand:hover {
+          color: var(--primary-color);
+        }
+        .nav-link {
+          color: var(--text-dark) !important;
+          font-weight: 500;
+          margin-left: 1rem;
+          cursor: pointer;
+        }
+        .nav-link:hover {
+          color: var(--primary-color) !important;
+        }
+        .dropdown-menu {
+          border: none;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          border-radius: 10px;
+        }
+        .dropdown-item {
+          padding: 8px 16px;
+          cursor: pointer;
+        }
+        .dropdown-item:hover {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-header {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: white;
+          padding: 60px 0;
+          margin-bottom: 40px;
+        }
+        .stats-card {
+          background: white;
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 4px 20px var(--card-shadow);
+          text-align: center;
+          margin-bottom: 30px;
+          transition: transform 0.3s ease;
+        }
+        .stats-card:hover {
+          transform: translateY(-5px);
+        }
+        .stats-icon {
+          font-size: 3rem;
+          color: var(--primary-color);
+          margin-bottom: 15px;
+        }
+        .stats-number {
+          font-size: 2.5rem;
+          font-weight: bold;
+          color: var(--text-dark);
+          margin-bottom: 10px;
+        }
+        .stats-label {
+          color: #666;
+          font-size: 1.1rem;
+        }
+        .profile-section {
+          background: white;
+          border-radius: 15px;
+          padding: 40px;
+          box-shadow: 0 4px 20px var(--card-shadow);
+          margin-bottom: 40px;
+        }
+        .profile-header {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        .profile-avatar {
+          width: 120px;
+          height: 120px;
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 20px;
+          font-size: 3rem;
+          color: white;
+        }
+        .profile-info {
+          margin-bottom: 25px;
+        }
+        .info-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 12px 0;
+          border-bottom: 1px solid #eee;
+        }
+        .info-label {
+          font-weight: 600;
+          color: #555;
+        }
+        .info-value {
+          color: var(--text-dark);
+        }
+
+        /* Amazon-style footer */
+        .amazon-footer {
+          background-color: #2d3748;
+          color: white;
+          padding: 40px 0;
+        }
+        .amazon-footer h5 {
+          margin-bottom: 20px;
+        }
+        .amazon-footer ul {
+          list-style: none;
+          padding: 0;
+        }
+        .amazon-footer ul li {
+          margin-bottom: 8px;
+        }
+        .amazon-footer ul li a {
+          color: white;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .amazon-footer ul li a:hover {
+          text-decoration: underline;
+        }
+        footer {
+          background: var(--primary-color);
+          color: white;
+          padding: 25px 0;
+        }
+        footer a {
+          color: white;
+          margin: 0 10px;
+          font-size: 1.2rem;
+          cursor: pointer;
+        }
+        footer a:hover {
+          color: var(--secondary-color);
+          text-decoration: none;
+        }
+        footer .social-icons {
+          margin-top: 10px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+          margin-bottom: 40px;
+        }
+        .action-btn {
+          background: white;
+          border: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          padding: 15px 25px;
+          border-radius: 10px;
+          text-decoration: none;
+          display: block;
+          text-align: center;
+          transition: all 0.3s ease;
+          margin-bottom: 15px;
+          cursor: pointer;
+        }
+        .action-btn:hover {
+          background: var(--primary-color);
+          color: white;
+          transform: translateY(-2px);
+        }
+
+        /* Active nav link */
+        .nav-link.active {
+          color: var(--primary-color) !important;
+          font-weight: 600;
+        }
+
+        /* Section styles for dashboard navigation */
+        .dashboard-section {
+            display: none;
+        }
+        .dashboard-section.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<!-- Navbar (Modified for Dashboard) -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="/">JWT Auth Demo</a>
-        <div class="navbar-nav ms-auto">
-            <span class="navbar-text me-3" th:text="'Welcome, ' + ${user.firstName} + '!'"></span>
-            <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+        <a class="navbar-brand" onclick="showDashboardHome()">
+            <i class="fa-solid fa-hand-holding-heart me-2"></i>Care & Share
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" onclick="showDashboardHome()">
+                    <i class="fa-solid fa-house"></i> Dashboard Home
+                </a>
+                <a class="nav-link" onclick="showSection('actions')">
+                    <i class="fa-solid fa-hands-helping"></i> My Actions
+                </a>
+                <a class="nav-link" onclick="showSection('items')">
+                    <i class="fa-solid fa-list"></i> My Items
+                </a>
+                <a class="nav-link" onclick="showSection('activity')">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Activity
+                </a>
+
+                <!-- User Dropdown -->
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i>
+                        <span id="userName" th:text="${user?.firstName}">User</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" onclick="showProfile()">
+                            <i class="fa-solid fa-id-card me-2"></i>My Profile
+                        </a></li>
+                        <li><a class="dropdown-item" onclick="showDashboardHome()">
+                            <i class="fa-solid fa-chart-line me-2"></i>Dashboard Home
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" onclick="logout()">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="mb-0">User Dashboard</h4>
-                </div>
-                <div class="card-body">
-                    <div th:if="${user}">
-                        <h5>User Information</h5>
-                        <table class="table">
-                            <tr>
-                                <th>Name:</th>
-                                <td th:text="${user.firstName + ' ' + user.lastName}"></td>
-                            </tr>
-                            <tr>
-                                <th>Email:</th>
-                                <td th:text="${user.email}"></td>
-                            </tr>
-                            <tr>
-                                <th>User ID:</th>
-                                <td th:text="${user.id}"></td>
-                            </tr>
-                        </table>
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <div class="container text-center">
+        <h1 id="dashboardTitle">Welcome to Your Dashboard</h1>
+        <p class="lead" id="dashboardSubtitle">Manage your donations, exchanges, and resell activities in one place</p>
+    </div>
+</div>
+
+<!-- Dashboard Content -->
+<div class="container">
+    <!-- Dashboard Home Section (Default) -->
+    <div id="dashboardHome" class="dashboard-section active">
+        <!-- Quick Stats -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
                     </div>
-                    <div class="mt-4">
-                        <button class="btn btn-info" onclick="getCurrentUser()">Get Current User via API</button>
-                        <div id="apiResponse" class="mt-3"></div>
+                    <div class="stats-number" id="donationsCount">0</div>
+                    <div class="stats-label">Items Donated</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa-solid fa-right-left"></i>
+                    </div>
+                    <div class="stats-number" id="exchangesCount">0</div>
+                    <div class="stats-label">Items Exchanged</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa-solid fa-tag"></i>
+                    </div>
+                    <div class="stats-number" id="salesCount">0</div>
+                    <div class="stats-label">Items Sold</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="stats-number" id="rating">4.8</div>
+                    <div class="stats-label">Your Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="profile-section">
+                    <h3>Recent Activities</h3>
+                    <p class="text-muted">You haven't performed any activities yet.</p>
+                    <div class="alert alert-info">
+                        <i class="fa-solid fa-info-circle me-2"></i>
+                        Start by donating, exchanging, or reselling items to see your activities here.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quick-actions">
+                    <h4>Quick Actions</h4>
+                    <a class="action-btn" onclick="showSection('items')">
+                        <i class="fa-solid fa-plus me-2"></i>Add New Item
+                    </a>
+                    <a class="action-btn" onclick="showSection('actions')">
+                        <i class="fa-solid fa-hand-holding-heart me-2"></i>Donate Items
+                    </a>
+                    <a class="action-btn" onclick="showSection('actions')">
+                        <i class="fa-solid fa-right-left me-2"></i>Exchange Items
+                    </a>
+                    <a class="action-btn" onclick="showSection('actions')">
+                        <i class="fa-solid fa-tag me-2"></i>Resell Items
+                    </a>
+                </div>
+
+                <div class="profile-section">
+                    <h4>Community Impact</h4>
+                    <div class="info-item">
+                        <span class="info-label">Carbon Saved:</span>
+                        <span class="info-value">0 kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Items Saved:</span>
+                        <span class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">People Helped:</span>
+                        <span class="info-value">0</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Profile Section -->
+    <div id="profileSection" class="dashboard-section profile-section">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h2>My Profile</h2>
+            <p class="text-muted">Manage your personal information</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="profile-info">
+                    <h4>Personal Information</h4>
+                    <div class="info-item">
+                        <span class="info-label">First Name:</span>
+                        <span class="info-value" id="profileFirstName" th:text="${user?.firstName}">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Last Name:</span>
+                        <span class="info-value" id="profileLastName" th:text="${user?.lastName}">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value" id="profileEmail" th:text="${user?.email}">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">User ID:</span>
+                        <span class="info-value" id="profileId" th:text="${user?.id}">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Member Since:</span>
+                        <span class="info-value" id="memberSince">2025</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-info">
+                    <h4>Account Status</h4>
+                    <div class="info-item">
+                        <span class="info-label">Account Type:</span>
+                        <span class="info-value badge bg-success">Verified Member</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email Verified:</span>
+                        <span class="info-value badge bg-success">Verified</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Community Rating:</span>
+                        <span class="info-value">
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star text-warning"></i>
+                            <i class="fa-solid fa-star-half-alt text-warning"></i>
+                            4.8/5.0
+                        </span>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h5>Quick Actions</h5>
+                    <a class="action-btn">
+                        <i class="fa-solid fa-pencil me-2"></i>Edit Profile
+                    </a>
+                    <a class="action-btn">
+                        <i class="fa-solid fa-lock me-2"></i>Change Password
+                    </a>
+                    <a class="action-btn">
+                        <i class="fa-solid fa-bell me-2"></i>Notification Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Actions Section -->
+    <div id="actionsSection" class="dashboard-section">
+        <div class="profile-section">
+            <h2>My Actions</h2>
+            <p class="text-muted">Manage your donations, exchanges, and sales</p>
+
+            <div class="alert alert-info">
+                <i class="fa-solid fa-info-circle me-2"></i>
+                This section will show your ongoing and completed actions.
+            </div>
+        </div>
+    </div>
+
+    <!-- My Items Section -->
+    <div id="itemsSection" class="dashboard-section">
+        <div class="profile-section">
+            <h2>My Items</h2>
+            <p class="text-muted">Manage items you've listed for donation, exchange, or resale</p>
+
+            <div class="alert alert-info">
+                <i class="fa-solid fa-info-circle me-2"></i>
+                This section will show items you've listed.
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Section -->
+    <div id="activitySection" class="dashboard-section">
+        <div class="profile-section">
+            <h2>Activity History</h2>
+            <p class="text-muted">View your complete activity history</p>
+
+            <div class="alert alert-info">
+                <i class="fa-solid fa-info-circle me-2"></i>
+                This section will show your complete activity timeline.
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- Amazon-style footer -->
+<section class="amazon-footer">
+    <div class="container">
+        <div class="row text-start">
+            <div class="col-md-3 mb-3">
+                <h5>Get to Know Us</h5>
+                <ul>
+                    <li><a onclick="showDashboardHome()">Dashboard Home</a></li>
+                    <li><a onclick="showProfile()">My Profile</a></li>
+                    <li><a onclick="showSection('actions')">My Actions</a></li>
+                    <li><a onclick="showSection('items')">My Items</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h5>Connect with Us</h5>
+                <ul>
+                    <li><a href="#" target="_blank">Facebook</a></li>
+                    <li><a href="#" target="_blank">Twitter</a></li>
+                    <li><a href="#" target="_blank">Instagram</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h5>Make a Difference</h5>
+                <ul>
+                    <li><a onclick="showSection('actions')">Start Donating</a></li>
+                    <li><a onclick="showSection('actions')">Exchange Items</a></li>
+                    <li><a onclick="showSection('actions')">Resell Items</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h5>Let Us Help You</h5>
+                <ul>
+                    <li><a onclick="showProfile()">Your Account</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Original Footer -->
+<footer class="text-center">
+    <div class="container">
+        <p>© 2025 Care & Share. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Function to show dashboard home
+    function showDashboardHome() {
+        hideAllSections();
+        document.getElementById('dashboardHome').classList.add('active');
+        updateNavActiveState('dashboardHome');
+        updateDashboardHeader('Welcome to Your Dashboard', 'Manage your donations, exchanges, and resell activities in one place');
+    }
+
+    // Function to show profile section
+    function showProfile() {
+        hideAllSections();
+        document.getElementById('profileSection').classList.add('active');
+        updateNavActiveState('profile');
+        updateDashboardHeader('My Profile', 'Manage your personal information and account settings');
+        updateProfileData();
+    }
+
+    // Function to show different sections
+    function showSection(section) {
+        hideAllSections();
+
+        switch(section) {
+            case 'actions':
+                document.getElementById('actionsSection').classList.add('active');
+                updateNavActiveState('actions');
+                updateDashboardHeader('My Actions', 'Manage your donations, exchanges, and sales');
+                break;
+            case 'items':
+                document.getElementById('itemsSection').classList.add('active');
+                updateNavActiveState('items');
+                updateDashboardHeader('My Items', 'Manage items you\'ve listed for donation, exchange, or resale');
+                break;
+            case 'activity':
+                document.getElementById('activitySection').classList.add('active');
+                updateNavActiveState('activity');
+                updateDashboardHeader('Activity History', 'View your complete activity timeline');
+                break;
+        }
+    }
+
+    // Function to hide all sections
+    function hideAllSections() {
+        const sections = document.querySelectorAll('.dashboard-section');
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+    }
+
+    // Function to update active nav state
+    function updateNavActiveState(activeSection) {
+        // Remove active class from all nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Add active class to the appropriate nav link
+        switch(activeSection) {
+            case 'dashboardHome':
+                navLinks[0].classList.add('active'); // Dashboard Home link
+                break;
+            case 'actions':
+                navLinks[1].classList.add('active'); // My Actions link
+                break;
+            case 'items':
+                navLinks[2].classList.add('active'); // My Items link
+                break;
+            case 'activity':
+                navLinks[3].classList.add('active'); // Activity link
+                break;
+            case 'profile':
+                // Profile is in dropdown, so we don't update nav for this
+                break;
+        }
+    }
+
+    // Function to update dashboard header
+    function updateDashboardHeader(title, subtitle) {
+        document.getElementById('dashboardTitle').textContent = title;
+        document.getElementById('dashboardSubtitle').textContent = subtitle;
+    }
+
+    // Function to update profile data
+    function updateProfileData() {
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+            fetch('/api/user/me', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                return response.json();
+            })
+            .then(user => {
+                // Update profile fields
+                document.getElementById('profileFirstName').textContent = user.firstName || 'N/A';
+                document.getElementById('profileLastName').textContent = user.lastName || 'N/A';
+                document.getElementById('profileEmail').textContent = user.email || 'N/A';
+                document.getElementById('profileId').textContent = user.id || 'N/A';
+                document.getElementById('userName').textContent = user.firstName || 'User';
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+            });
+        }
+    }
+
+    // Logout function
     function logout() {
-        // Call logout API to clear cookie
         fetch('/api/auth/logout', {
             method: 'POST',
-            credentials: 'include' // Important for cookies
+            credentials: 'include'
         })
         .then(() => {
-            // Clear localStorage
             localStorage.removeItem('jwtToken');
-            // Redirect to home
             window.location.href = '/';
         })
         .catch(error => {
             console.error('Logout error:', error);
+            localStorage.removeItem('jwtToken');
             window.location.href = '/';
         });
     }
 
-    function getCurrentUser() {
-        const token = localStorage.getItem('jwtToken');
-
-        fetch('/api/user/me', {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Not authenticated');
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById('apiResponse').innerHTML =
-                '<div class="alert alert-success"><pre>' + JSON.stringify(data, null, 2) + '</pre></div>';
-        })
-        .catch(error => {
-            document.getElementById('apiResponse').innerHTML =
-                '<div class="alert alert-danger">Failed to fetch user data: ' + error.message + '</div>';
-        });
+    // Initialize dashboard stats
+    function initializeStats() {
+        document.getElementById('donationsCount').textContent = '0';
+        document.getElementById('exchangesCount').textContent = '0';
+        document.getElementById('salesCount').textContent = '0';
+        document.getElementById('rating').textContent = '4.8';
     }
 
     // Check authentication on page load
-    window.onload = function() {
-        // Try to get user data to verify authentication
-        getCurrentUser();
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = '/login';
+            return;
+        }
+
+        // Initialize the page
+        initializeStats();
+        updateProfileData();
+
+        // Show dashboard home by default
+        showDashboardHome();
+    });
+
+    // Prevent default behavior for all internal links
+    document.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+            e.preventDefault();
+        }
+    });
 </script>
 </body>
 </html>
