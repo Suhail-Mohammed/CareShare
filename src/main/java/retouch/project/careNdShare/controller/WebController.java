@@ -1,6 +1,7 @@
 package retouch.project.careNdShare.controller;
 
 
+import org.springframework.web.bind.annotation.RequestParam;
 import retouch.project.careNdShare.entity.User;
 import retouch.project.careNdShare.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,23 @@ public class WebController {
         }
         // If no user is authenticated, redirect to login
         return "redirect:/login";
+    }
+
+    @GetMapping("/forgot-password")
+    public String forgotPassword() {
+        // If user is already authenticated, redirect to dashboard
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() &&
+                !authentication.getPrincipal().equals("anonymousUser")) {
+            return "redirect:/dashboard";
+        }
+        return "forgot-password";
+    }
+    @GetMapping("/reset-password")
+    public String resetPassword(@RequestParam(required = false) String token, Model model) {
+        if (token != null) {
+            model.addAttribute("token", token);
+        }
+        return "reset-password";
     }
 }

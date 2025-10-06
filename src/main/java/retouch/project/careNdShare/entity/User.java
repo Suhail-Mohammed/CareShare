@@ -1,8 +1,7 @@
 package retouch.project.careNdShare.entity;
 
-
 import jakarta.persistence.*;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -26,6 +25,13 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
+
+    // Password reset fields
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
 
     // Constructors
     public User() {}
@@ -56,4 +62,10 @@ public class User {
 
     public List<String> getRoles() { return roles; }
     public void setRoles(List<String> roles) { this.roles = roles; }
+
+    public String getResetToken() { return resetToken; }
+    public void setResetToken(String resetToken) { this.resetToken = resetToken; }
+
+    public LocalDateTime getResetTokenExpiry() { return resetTokenExpiry; }
+    public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) { this.resetTokenExpiry = resetTokenExpiry; }
 }

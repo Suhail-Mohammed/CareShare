@@ -1,82 +1,332 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - JWT Auth Demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Care & Share — Register</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        html, body {
+          background: rgba(6, 20, 29, 0.85);
+          height: 100%;
+          margin: 0;
+        }
+        body {
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+          position: relative;
+        }
+        body::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(6, 20, 29, 0.85);
+          z-index: 0;
+        }
+        .register-box {
+          position: relative;
+          z-index: 1;
+          width: 450px;
+          max-height: 90vh;
+          overflow-y: auto;
+          background: rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 30px rgba(40, 167, 69, 0.4);
+          padding: 30px 30px;
+          border-radius: 12px;
+          color: #fff;
+          box-sizing: border-box;
+        }
+        .register-box h2 {
+          font-size: 26px;
+          margin-bottom: 30px;
+          text-align: center;
+          color: #28a745;
+        }
+        .input-box {
+          position: relative;
+          margin-bottom: 25px;
+        }
+        .input-box input {
+          width: 100%;
+          padding: 16px 50px 16px 16px;
+          border: none;
+          outline: none;
+          border-radius: 8px;
+          background: #142733;
+          color: #fff;
+          font-size: 16px;
+          transition: 0.3s;
+        }
+        .input-box input:focus {
+          box-shadow: 0 0 10px #28a745;
+        }
+        .input-box i {
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #aaa;
+          font-size: 18px;
+        }
+        .btn {
+          width: 100%;
+          padding: 16px;
+          border: none;
+          border-radius: 25px;
+          background: linear-gradient(135deg, #28a745, #218838);
+          color: #fff;
+          font-weight: bold;
+          font-size: 17px;
+          cursor: pointer;
+          margin-top: 15px;
+          transition: 0.3s;
+        }
+        .btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+        }
+        .signup {
+          margin-top: 20px;
+          font-size: 15px;
+          text-align: center;
+        }
+        .signup a {
+          color: #28a745;
+          text-decoration: none;
+        }
+        .feedback {
+          font-size: 0.95rem;
+          margin-top: 4px;
+        }
+        /* Scrollbar styling for WebKit browsers */
+        .register-box::-webkit-scrollbar {
+          width: 8px;
+        }
+        .register-box::-webkit-scrollbar-track {
+          background-color: rgba(6, 20, 29, 0.85);
+        }
+        .register-box::-webkit-scrollbar-thumb {
+          background-color: #218838;
+          border-radius: 10px;
+        }
+        .register-box::-webkit-scrollbar-thumb:hover {
+          background-color: #28a745;
+        }
+        @media (max-width: 500px) {
+          .register-box {
+            width: 90vw;
+            padding: 20px 15px;
+          }
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/">JWT Auth Demo</a>
-    </div>
-</nav>
+<div class="register-box">
+    <h2>Register</h2>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="mb-0">Register</h4>
-                </div>
-                <div class="card-body">
-                    <form id="registerForm">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Register</button>
-                    </form>
-                    <div class="mt-3 text-center">
-                        <a href="/login">Already have an account? Login here</a>
-                    </div>
-                    <div id="message" class="mt-3"></div>
-                </div>
+    <form id="registerForm" novalidate>
+        <div class="input-box">
+            <input id="firstName" name="firstName" type="text" placeholder="First Name" required />
+            <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="input-box">
+            <input id="lastName" name="lastName" type="text" placeholder="Last Name" required />
+            <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="input-box">
+            <input id="email" name="email" type="email" placeholder="Email Address" required />
+            <i class="bi bi-envelope-fill"></i>
+        </div>
+        <div class="input-box">
+            <input id="password" name="password" type="password" placeholder="Password" required />
+            <i class="bi bi-lock-fill"></i>
+        </div>
+        <div class="input-box">
+            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" required />
+            <i class="bi bi-lock-fill"></i>
+            <div id="passwordMatchFeedback" class="feedback"></div>
+        </div>
+
+        <button class="btn" type="submit">Register</button>
+    </form>
+
+    <div class="signup">
+        Already have an account? <a href="/login">Login</a>
+    </div>
+</div>
+
+<!-- Bootstrap Modal for success -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="successModalLabel">Registration Successful</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="successModalBody">
+                <!-- Success message will be inserted here -->
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-primary" id="modalOkBtn">OK</button>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const passwordMatchFeedback = document.getElementById('passwordMatchFeedback');
+    const registerForm = document.getElementById('registerForm');
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    const modalOkBtn = document.getElementById('modalOkBtn');
+    const successModalBody = document.getElementById('successModalBody');
 
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    function checkPasswordMatch() {
+      if (!confirmPasswordInput.value) {
+        passwordMatchFeedback.textContent = '';
+        return;
+      }
+      if (passwordInput.value === confirmPasswordInput.value) {
+        passwordMatchFeedback.textContent = '✅ Passwords match';
+        passwordMatchFeedback.className = 'feedback text-success';
+      } else {
+        passwordMatchFeedback.textContent = '❌ Passwords do not match';
+        passwordMatchFeedback.className = 'feedback text-danger';
+      }
+    }
 
-        fetch('/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ firstName, lastName, email, password })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('message').innerHTML =
-                '<div class="alert alert-success">' + data + '</div>';
-            // Clear form
-            document.getElementById('registerForm').reset();
-        })
-        .catch(error => {
-            document.getElementById('message').innerHTML =
-                '<div class="alert alert-danger">Registration failed</div>';
+    passwordInput.addEventListener('input', checkPasswordMatch);
+    confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic validation
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = passwordInput.value;
+
+      if (!firstName || !lastName || !email || !password) {
+        alert('❌ Please fill in all fields.');
+        return;
+      }
+
+      if (password.length < 6) {
+        alert('❌ Password must be at least 6 characters long.');
+        passwordInput.focus();
+        return;
+      }
+
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        alert('❌ Passwords do not match.');
+        confirmPasswordInput.focus();
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('❌ Please enter a valid email address.');
+        document.getElementById('email').focus();
+        return;
+      }
+
+      const payload = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password
+      };
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
         });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          // Handle error response
+          const errorMessage = data.message || 'Registration failed. Please try again.';
+          alert('❌ ' + errorMessage);
+          return;
+        }
+
+        // Success case - data should contain message, email, firstName
+        successModalBody.innerHTML = `
+            <p>🎉 ${data.message || 'Registration successful!'}</p>
+            <p>Welcome to Care & Share, <strong>${data.firstName || firstName}</strong>!</p>
+            <p>You can now login with your email: <strong>${data.email || email}</strong></p>
+        `;
+        successModal.show();
+
+        // Clear form
+        registerForm.reset();
+        passwordMatchFeedback.textContent = '';
+
+      } catch (err) {
+        console.error('Registration error:', err);
+        alert('⚠️ Network error: Please check your connection and try again.');
+      }
+    });
+
+    modalOkBtn.addEventListener('click', () => {
+      successModal.hide();
+      window.location.href = '/login';
+    });
+
+    // Enter key support for form submission
+    registerForm.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        registerForm.dispatchEvent(new Event('submit'));
+      }
+    });
+
+    // Check if user is already logged in
+    window.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        // Verify token is still valid
+        fetch('/api/user/me', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = '/dashboard';
+          }
+        })
+        .catch(() => {
+          // Token is invalid, stay on register page
+          localStorage.removeItem('jwtToken');
+        });
+      }
     });
 </script>
 </body>
