@@ -33,6 +33,8 @@
           color: var(--primary-color);
           font-size: 1.6rem;
           cursor: pointer;
+          display: flex;
+          align-items: center;
         }
         .navbar-brand:hover {
           color: var(--primary-color);
@@ -213,6 +215,16 @@
         .dashboard-section.active {
             display: block;
         }
+
+        /* Admin badge */
+        .admin-badge {
+            background: #dc3545;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -221,7 +233,7 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand" onclick="showDashboardHome()">
-            <img src="/images/logo.png" alt="Care & Share" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+            <img src="/images/logo.png" alt="Care & Share" style="height: 40px; width: auto; margin-right: 10px;">
 
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -249,6 +261,7 @@
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user"></i>
                         <span id="userName" th:text="${user?.firstName}">User</span>
+                        <span id="adminBadge" class="admin-badge" style="display: none;">ADMIN</span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" onclick="showProfile()">
@@ -257,6 +270,12 @@
                         <li><a class="dropdown-item" onclick="showDashboardHome()">
                             <i class="fa-solid fa-chart-line me-2"></i>Dashboard Home
                         </a></li>
+                        <!-- Admin Link - Only show if user is admin -->
+                        <li id="adminLink" style="display: none;">
+                            <a class="dropdown-item" href="/admin">
+                                <i class="fa-solid fa-shield-halved me-2"></i>Admin Panel
+                            </a>
+                        </li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" onclick="logout()">
                             <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -408,7 +427,9 @@
                     <h4>Account Status</h4>
                     <div class="info-item">
                         <span class="info-label">Account Type:</span>
-                        <span class="info-value badge bg-success">Verified Member</span>
+                        <span class="info-value">
+                            <span id="accountTypeBadge" class="badge bg-success">Verified Member</span>
+                        </span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Email Verified:</span>
@@ -623,7 +644,7 @@
         document.getElementById('dashboardSubtitle').textContent = subtitle;
     }
 
-    // Function to update profile data
+    // Function to update profile data and check admin status
     function updateProfileData() {
         const token = localStorage.getItem('jwtToken');
         if (token) {
@@ -647,6 +668,14 @@
                 document.getElementById('profileEmail').textContent = user.email || 'N/A';
                 document.getElementById('profileId').textContent = user.id || 'N/A';
                 document.getElementById('userName').textContent = user.firstName || 'User';
+
+                // Check if user is admin and update UI accordingly
+                if (user.admin) {
+                    document.getElementById('adminBadge').style.display = 'inline';
+                    document.getElementById('adminLink').style.display = 'block';
+                    document.getElementById('accountTypeBadge').className = 'badge bg-danger';
+                    document.getElementById('accountTypeBadge').textContent = 'Administrator';
+                }
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);

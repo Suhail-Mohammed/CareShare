@@ -33,6 +33,10 @@ public class User {
     @Column(name = "reset_token_expiry")
     private LocalDateTime resetTokenExpiry;
 
+    // Admin field - make sure this matches what you're using in the repository
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin = false; // or private boolean admin = false;
+
     // Constructors
     public User() {}
 
@@ -68,4 +72,8 @@ public class User {
 
     public LocalDateTime getResetTokenExpiry() { return resetTokenExpiry; }
     public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) { this.resetTokenExpiry = resetTokenExpiry; }
+
+    // Admin getter and setter
+    public boolean isAdmin() { return isAdmin; }
+    public void setAdmin(boolean admin) { isAdmin = admin; }
 }
