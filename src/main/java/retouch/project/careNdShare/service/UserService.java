@@ -28,6 +28,38 @@ public class UserService {
     @Autowired
     private EmailService emailService;
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User updateUserRole(Long userId, boolean isAdmin) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setAdmin(isAdmin);
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found");
+        }
+        userRepository.deleteById(userId);
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    public long getTotalUsers() {
+        return userRepository.count();
+    }
+
+    public long getAdminUsersCount() {
+        return userRepository.countByAdminTrue();
+    }
+
+
+
     public User registerUser(String email, String password, String firstName, String lastName) {
         // Validate input
         if (email == null || email.trim().isEmpty()) {

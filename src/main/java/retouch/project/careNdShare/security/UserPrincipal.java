@@ -15,14 +15,16 @@ public class UserPrincipal implements UserDetails {
     private Long id;
     private String email;
     private String password;
+    private boolean isAdmin;
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(Long id, String email, String password,
-                         Collection<? extends GrantedAuthority> authorities) {
+                         Collection<? extends GrantedAuthority> authorities, boolean isAdmin) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.isAdmin = isAdmin;
     }
 
     public static UserPrincipal create(User user) {
@@ -30,11 +32,17 @@ public class UserPrincipal implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role))
                 .collect(Collectors.toList());
 
+        // Add ADMIN role if user is admin
+        if (user.isAdmin()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities
+                authorities,
+                user.isAdmin()
         );
     }
 
@@ -57,4 +65,6 @@ public class UserPrincipal implements UserDetails {
     public boolean isCredentialsNonExpired() { return true; }
     @Override
     public boolean isEnabled() { return true; }
+    public boolean isAdmin() { return isAdmin; }
 }
+

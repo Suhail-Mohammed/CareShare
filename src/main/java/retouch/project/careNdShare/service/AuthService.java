@@ -39,4 +39,9 @@ public class AuthService {
         }
         return null;
     }
+
+    public boolean isCurrentUserAdmin() {
+        User user = getCurrentUser();
+        return user != null && user.isAdmin();
+    }
 }

@@ -66,4 +66,14 @@ public class WebController {
         }
         return "reset-password";
     }
+
+    @GetMapping("/admin")
+    public String adminPanel(Model model) {
+        User user = authService.getCurrentUser();
+        if (user != null && user.isAdmin()) {
+            model.addAttribute("user", user);
+            return "admin";
+        }
+        return "redirect:/dashboard";
+    }
 }

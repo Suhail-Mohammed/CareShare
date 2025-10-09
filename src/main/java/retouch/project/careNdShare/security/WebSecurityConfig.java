@@ -54,7 +54,9 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/", "/login", "/forgot-password","/reset-password" ,"/register", "/css/**", "/js/**","/images/**").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/", "/login", "/forgot-password","/reset-password" ,"/register", "/css/**", "/js/**","/images/**","/webjars/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
