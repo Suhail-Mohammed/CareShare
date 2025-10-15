@@ -28,6 +28,35 @@
           width: 100%;
           z-index: 1050;
         }
+        /* Add to your existing CSS */
+            .product-image {
+                width: 80px;
+                height: 80px;
+                border-radius: 8px;
+                object-fit: cover;
+                border: 2px solid #e9ecef;
+                transition: all 0.3s ease;
+            }
+
+            .product-image:hover {
+                transform: scale(1.05);
+                border-color: var(--primary-color);
+            }
+
+            .image-placeholder {
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #6c757d;
+                font-size: 0.7rem;
+                border: 2px dashed #dee2e6;
+                text-align: center;
+                padding: 5px;
+            }
         .navbar-brand {
           font-weight: 700;
           color: var(--primary-color);
@@ -477,15 +506,84 @@
         </div>
     </div>
 
-    <!-- My Items Section -->
+    <!-- Add this to the itemsSection in dashboard.html -->
     <div id="itemsSection" class="dashboard-section">
         <div class="profile-section">
             <h2>My Items</h2>
             <p class="text-muted">Manage items you've listed for donation, exchange, or resale</p>
 
-            <div class="alert alert-info">
-                <i class="fa-solid fa-info-circle me-2"></i>
-                This section will show items you've listed.
+            <!-- Add Product Form -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fa-solid fa-plus me-2"></i>Add New Product</h5>
+                </div>
+                <div class="card-body">
+                    <form id="addProductForm" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Product Name *</label>
+                                    <input type="text" class="form-control" id="productName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productPrice" class="form-label">Price (₹) *</label>
+                                    <input type="number" class="form-control" id="productPrice" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productCategory" class="form-label">Category *</label>
+                                    <select class="form-select" id="productCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="old">Old</option>
+                                        <option value="new">New</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productType" class="form-label">Listing Type *</label>
+                                    <select class="form-select" id="productType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Donate">Donate</option>
+                                        <option value="Exchange">Exchange</option>
+                                        <option value="Resell">Resell</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productImage" class="form-label">Product Image *</label>
+                                    <input type="file" class="form-control" id="productImage" accept="image/*" required>
+                                    <div class="form-text">Upload a clear image of your product</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="productDescription" rows="3" placeholder="Describe your product..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-paper-plane me-2"></i>Submit Product
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- My Products List -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fa-solid fa-list me-2"></i>My Products</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary active" onclick="filterProducts('all')">All</button>
+                            <button type="button" class="btn btn-outline-warning" onclick="filterProducts('PENDING')">Pending</button>
+                            <button type="button" class="btn btn-outline-success" onclick="filterProducts('APPROVED')">Approved</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="filterProducts('REJECTED')">Rejected</button>
+                        </div>
+                    </div>
+                    <div id="productsList" class="row">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -609,6 +707,145 @@
             section.classList.remove('active');
         });
     }
+
+    // Product Management Functions
+function submitProductForm(event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', document.getElementById('productName').value);
+    formData.append('price', document.getElementById('productPrice').value);
+    formData.append('category', document.getElementById('productCategory').value);
+    formData.append('type', document.getElementById('productType').value);
+    formData.append('description', document.getElementById('productDescription').value);
+    formData.append('image', document.getElementById('productImage').files[0]);
+
+    const token = localStorage.getItem('jwtToken');
+
+    fetch('/api/products/add', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            document.getElementById('addProductForm').reset();
+            loadMyProducts();
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting product');
+    });
+}
+
+function loadMyProducts(status = 'all') {
+    const token = localStorage.getItem('jwtToken');
+    let url = '/api/products/my-products';
+
+    if (status !== 'all') {
+        url = `/api/products/my-products/${status}`;
+    }
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(products => {
+        displayProducts(products);
+    })
+    .catch(error => {
+        console.error('Error loading products:', error);
+    });
+}
+
+function displayProducts(products) {
+    const container = document.getElementById('productsList');
+
+    if (products.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
+                <p class="text-muted">No products found</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = products.map(product => `
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <img src="${product.imagePath}" class="card-img-top" alt="${product.name}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">${product.name}</h5>
+                    <p class="card-text">${product.description || 'No description'}</p>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-secondary">${product.category}</span>
+                        <span class="badge bg-info">${product.type}</span>
+                    </div>
+                    <p class="card-text"><strong>Price: ₹${product.price}</strong></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge ${getStatusBadgeClass(product.status)}">
+                            ${product.status}
+                        </span>
+                        <small class="text-muted">${new Date(product.createdAt).toLocaleDateString()}</small>
+                    </div>
+                    ${product.status === 'REJECTED' && product.rejectionReason ? `
+                        <div class="mt-2">
+                            <small class="text-danger"><strong>Reason: </strong>${product.rejectionReason}</small>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getStatusBadgeClass(status) {
+    switch(status) {
+        case 'PENDING': return 'bg-warning';
+        case 'APPROVED': return 'bg-success';
+        case 'REJECTED': return 'bg-danger';
+        default: return 'bg-secondary';
+    }
+}
+
+function filterProducts(status) {
+    // Update active button
+    document.querySelectorAll('.btn-group .btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    loadMyProducts(status);
+}
+
+// Initialize product form
+document.addEventListener('DOMContentLoaded', function() {
+    const productForm = document.getElementById('addProductForm');
+    if (productForm) {
+        productForm.addEventListener('submit', submitProductForm);
+    }
+
+    // Load products when items section is shown
+    const originalShowSection = window.showSection;
+    window.showSection = function(section) {
+        originalShowSection(section);
+        if (section === 'items') {
+            loadMyProducts();
+        }
+    };
+});
 
     // Function to update active nav state
     function updateNavActiveState(activeSection) {

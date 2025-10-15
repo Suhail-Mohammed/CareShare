@@ -1,6 +1,7 @@
 package retouch.project.careNdShare.controller;
 
 import retouch.project.careNdShare.entity.User;
+import retouch.project.careNdShare.service.ProductService;
 import retouch.project.careNdShare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
@@ -79,4 +83,6 @@ public class AdminController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+
 }
