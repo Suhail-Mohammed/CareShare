@@ -16,6 +16,12 @@
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        :root {
+          --primary-color: #00A0E3; /* Mercedes blue */
+          --secondary-color: #000000; /* Black for contrast */
+          --accent-color: #E6F7FF; /* Light blue accent */
+        }
+
         body {
           height: 100vh;
           display: flex;
@@ -36,27 +42,28 @@
           z-index: 0;
         }
 
-        .login-box {
+        .login-container {
           position: relative;
           display: flex;
-          width: 750px;
-          min-height: 450px;
-          border-radius: 12px;
+          width: 850px;
+          min-height: 500px;
+          border-radius: 0;
           overflow: hidden;
-          background: rgba(0, 0, 0, 0.6);
-          box-shadow: 0 0 35px rgba(40, 167, 69, 0.4);
+          background: rgba(255, 255, 255, 0.95);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
           z-index: 1;
+          border-top: 5px solid var(--primary-color);
         }
 
         /* Left side - form */
-        .left {
-          flex: 1;
-          background: #0b1a24;
+        .form-section {
+          flex: 1.2;
+          background: #fff;
           padding: 50px 40px;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          color: #fff;
+          color: #333;
         }
 
         .login-icon {
@@ -66,38 +73,55 @@
           width: 90px;
           height: 90px;
           margin: 0 auto 20px auto;
-          background: rgba(40, 167, 69, 0.2);
+          background: rgba(0, 160, 227, 0.1);
           border-radius: 50%;
           font-size: 40px;
-          color: #28a745;
+          color: var(--primary-color);
+          border: 2px solid var(--primary-color);
         }
 
-        .left h2 {
-          font-size: 24px;
+        .form-section h2 {
+          font-size: 28px;
           margin-bottom: 30px;
           text-align: center;
-          color: #28a745;
+          color: var(--secondary-color);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          position: relative;
+          padding-bottom: 15px;
+        }
+
+        .form-section h2::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background-color: var(--primary-color);
         }
 
         .input-box {
           position: relative;
-          margin-bottom: 20px;
+          margin-bottom: 25px;
         }
 
         .input-box input {
           width: 100%;
           padding: 14px 45px 14px 15px;
-          border: none;
+          border: 1px solid #ddd;
           outline: none;
-          border-radius: 8px;
-          background: #142733;
-          color: #fff;
+          border-radius: 0;
+          background: #fff;
+          color: #333;
           font-size: 15px;
           transition: 0.3s;
         }
 
         .input-box input:focus {
-          box-shadow: 0 0 10px #28a745;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 2px rgba(0, 160, 227, 0.2);
         }
 
         .input-box i {
@@ -113,50 +137,55 @@
           width: 100%;
           padding: 14px;
           border: none;
-          border-radius: 25px;
-          background: linear-gradient(135deg, #28a745, #218838);
+          border-radius: 0;
+          background: var(--primary-color);
           color: #fff;
           font-weight: bold;
           font-size: 16px;
           cursor: pointer;
           margin-top: 15px;
           transition: 0.3s;
+          letter-spacing: 1px;
+          text-transform: uppercase;
         }
 
         .btn:hover {
+          background: var(--secondary-color);
           transform: translateY(-2px);
-          box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .signup {
-          margin-top: 15px;
+        .register-link {
+          margin-top: 20px;
           font-size: 14px;
           text-align: center;
-          color: #fff;
+          color: #666;
         }
 
-        .signup a {
+        .register-link a {
           display: inline-block;
           margin-top: 6px;
-          color: #28a745;
+          color: var(--primary-color);
           text-decoration: none;
+          font-weight: 600;
         }
 
-        .signup a.text-danger {
-          color: #dc3545;
+        .register-link a.text-secondary {
+          color: #666;
           display: block;
           margin-top: 10px;
           text-decoration: none;
+          font-weight: normal;
         }
 
-        .signup a:hover {
+        .register-link a:hover {
           text-decoration: underline;
         }
 
         /* Right side - welcome */
-        .right {
+        .welcome-section {
           flex: 1;
-          background: linear-gradient(135deg, #28a745, #218838);
+          background: linear-gradient(135deg, var(--primary-color), #0078b5);
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -164,60 +193,160 @@
           text-align: center;
           color: #fff;
           padding: 40px;
+          position: relative;
+          overflow: hidden;
         }
 
-        .right h2 {
-          font-size: 28px;
+        .welcome-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=500&q=60') no-repeat center center/cover;
+          opacity: 0.2;
+          z-index: 0;
+        }
+
+        .welcome-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .welcome-section h2 {
+          font-size: 32px;
           margin-bottom: 15px;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          font-weight: 700;
         }
 
-        .right p {
-          font-size: 15px;
+        .welcome-section p {
+          font-size: 16px;
           max-width: 250px;
-          line-height: 1.5;
+          line-height: 1.6;
+          margin-bottom: 20px;
+        }
+
+        .features-list {
+          text-align: left;
+          margin-top: 20px;
+        }
+
+        .features-list li {
+          margin-bottom: 10px;
+          display: flex;
+          align-items: center;
+        }
+
+        .features-list i {
+          margin-right: 10px;
+          color: #fff;
+        }
+
+        .form-check {
+          margin: 15px 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .form-check-input:checked {
+          background-color: var(--primary-color);
+          border-color: var(--primary-color);
+        }
+
+        .form-check-label {
+          font-size: 14px;
+          color: #666;
         }
 
         #alert {
           margin-bottom: 15px;
+          border-radius: 0;
+          border: none;
+          border-left: 4px solid var(--primary-color);
+          background: rgba(0, 160, 227, 0.1);
+          color: var(--primary-color);
+        }
+
+        .alert-danger {
+          border-left-color: #dc3545;
+          background: rgba(220, 53, 69, 0.1);
+          color: #dc3545;
+        }
+
+        @media (max-width: 900px) {
+          .login-container {
+            width: 90%;
+            flex-direction: column;
+            min-height: auto;
+          }
+
+          .welcome-section {
+            display: none;
+          }
         }
     </style>
 </head>
 <body>
 
-<div class="login-box">
-    <!-- Left -->
-    <div class="left">
+<div class="login-container">
+    <!-- Form Section -->
+    <div class="form-section">
         <div class="login-icon">
             <i class="bi bi-person-circle"></i>
         </div>
 
-        <h2>Login</h2>
+        <h2>Welcome Back</h2>
 
         <div id="alert" class="alert d-none" role="alert"></div>
 
         <form id="loginForm">
             <div class="input-box">
-                <input id="email" name="email" type="email" placeholder="Email" required />
+                <input id="email" name="email" type="email" placeholder="Email Address" required />
                 <i class="bi bi-envelope-fill"></i>
             </div>
             <div class="input-box">
                 <input id="password" name="password" type="password" placeholder="Password" required />
                 <i class="bi bi-lock-fill"></i>
             </div>
-            <button type="submit" class="btn">Login</button>
+
+            <div class="form-check">
+                <div>
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+                <a href="/forgot-password" class="text-secondary">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn">Sign In</button>
         </form>
 
-        <div class="signup">
-            Don't have an account? <a href="/register">Register</a>
-            <a href="/forgot-password" class="text-danger">Forgot Password?</a>
+        <div class="register-link">
+            Don't have an account? <a href="/register">Create Account</a>
         </div>
     </div>
 
-    <!-- Right -->
-    <div class="right">
-        <h2>WELCOME</h2>
-        <p>Where Care Meets Share <strong>Care & Share</strong>.</p>
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div class="welcome-content">
+            <h2>WELCOME BACK</h2>
+            <p>Continue your journey with <strong>Care & Share</strong>.</p>
+
+            <div class="features-list">
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill"></i> Access your dashboard</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Manage your listings</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Connect with community</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Track your impact</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Earn rewards</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -241,6 +370,7 @@
 
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
 
       // Basic validation
       if (!email || !password) {
@@ -248,9 +378,17 @@
         return;
       }
 
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showAlert('Please enter a valid email address', 'danger');
+        return;
+      }
+
       const payload = {
         email: email,
-        password: password
+        password: password,
+        rememberMe: rememberMe
       };
 
       try {
@@ -259,7 +397,7 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          credentials: 'include', // Important for cookies
+          credentials: 'include',
           body: JSON.stringify(payload)
         });
 
@@ -273,6 +411,9 @@
         if (data.token) {
           // Store token in localStorage for API calls
           localStorage.setItem('jwtToken', data.token);
+          if (rememberMe) {
+            localStorage.setItem('rememberMe', 'true');
+          }
           showAlert('Login successful! Redirecting...', 'success');
 
           // Redirect to dashboard
@@ -313,6 +454,12 @@
           // Token is invalid, stay on login page
           localStorage.removeItem('jwtToken');
         });
+      }
+
+      // Check for remember me preference
+      const rememberMe = localStorage.getItem('rememberMe');
+      if (rememberMe === 'true') {
+        document.getElementById('rememberMe').checked = true;
       }
     });
 
