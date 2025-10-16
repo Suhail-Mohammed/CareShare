@@ -8,25 +8,28 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
         :root {
-          --primary-color: #28a745; /* changed to green */
-          --secondary-color: #218838; /* darker green for hover */
-          --accent-color: #71c787; /* lighter green accent */
+          --primary-color: #00A0E3; /* Mercedes blue */
+          --secondary-color: #000000; /* Black for contrast */
+          --accent-color: #E6F7FF; /* Light blue accent */
           --bg-light: #f8fafc;
           --text-dark: #1E293B;
           --card-shadow: rgba(0,0,0,0.05);
         }
         body {
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: var(--bg-light);
+          background: #fff;
           color: var(--text-dark);
-          padding-top: 72px;
+          padding-top: 80px;
+          overflow-x: hidden;
         }
         .navbar-custom {
-          background: #fff;
+          background: rgba(255, 255, 255, 0.95);
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           position: fixed;
           width: 100%;
           z-index: 1050;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
         }
         .navbar-brand {
           font-weight: 700;
@@ -37,158 +40,278 @@
           color: var(--text-dark) !important;
           font-weight: 500;
           margin-left: 1rem;
+          position: relative;
+          transition: color 0.3s ease;
         }
         .nav-link:hover {
           color: var(--primary-color) !important;
         }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: var(--primary-color);
+          transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+          width: 100%;
+        }
 
         /* Hero */
         #heroCarousel {
-          height: 520px;
+          height: 80vh;
+          min-height: 600px;
+          position: relative;
         }
         #heroCarousel .carousel-item {
-          height: 520px;
+          height: 80vh;
+          min-height: 600px;
         }
         #heroCarousel .carousel-item img {
           object-fit: cover;
           height: 100%;
           width: 100%;
+          filter: brightness(0.7);
         }
         #heroCarousel .carousel-caption {
-          bottom: 20%;
-          background: rgba(0, 0, 0, 0.5);
-          border-radius: 12px;
-          padding: 2rem;
-          max-width: 600px;
+          bottom: 25%;
+          background: rgba(0, 0, 0, 0.6);
+          border-radius: 0;
+          padding: 3rem;
+          max-width: 800px;
+          text-align: left;
+          left: 10%;
+          right: auto;
         }
         #heroCarousel .carousel-caption h1 {
           font-weight: 700;
-          font-size: 3rem;
+          font-size: 3.5rem;
           color: white;
+          margin-bottom: 1.5rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
         #heroCarousel .carousel-caption p {
-          font-size: 1.2rem;
+          font-size: 1.3rem;
           color: #f0f0f0;
-          margin-bottom: 1.5rem;
+          margin-bottom: 2rem;
+          line-height: 1.6;
         }
         #heroCarousel .btn-primary {
-          background: var(--primary-color);
-          border: none;
-          padding: 0.8rem 2rem;
-          border-radius: 8px;
+          background: transparent;
+          border: 2px solid white;
+          padding: 0.8rem 2.5rem;
+          border-radius: 0;
           font-weight: 600;
+          letter-spacing: 1px;
+          transition: all 0.3s ease;
         }
         #heroCarousel .btn-primary:hover {
-          background: var(--secondary-color);
+          background: white;
+          color: var(--primary-color);
         }
 
         h2.section-title {
           font-weight: 700;
-          color: var(--primary-color);
-          margin-bottom: 2rem;
+          color: var(--secondary-color);
+          margin-bottom: 3rem;
           text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          position: relative;
+          padding-bottom: 1rem;
+        }
+        h2.section-title::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80px;
+          height: 3px;
+          background-color: var(--primary-color);
         }
 
         .card-section {
-          padding: 60px 15px;
-          max-width: 1100px;
-          margin: 3rem auto;
+          padding: 100px 15px;
+          max-width: 1200px;
+          margin: 0 auto;
         }
         .action-card, .feature-card {
           background: #fff;
-          border-radius: 15px;
-          padding: 30px 20px;
-          box-shadow: 0 4px 20px var(--card-shadow);
+          border-radius: 0;
+          padding: 40px 30px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.05);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           text-align: center;
           height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
+          border-top: 3px solid var(--primary-color);
+          position: relative;
+          overflow: hidden;
+        }
+        .action-card::before, .feature-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 0;
+          background: var(--accent-color);
+          transition: height 0.3s ease;
+          z-index: 0;
+        }
+        .action-card:hover::before, .feature-card:hover::before {
+          height: 100%;
         }
         .action-card:hover, .feature-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 8px 25px var(--card-shadow);
+          transform: translateY(-10px);
+          box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         .action-card .icon, .feature-card .feature-icon {
-          font-size: 3rem;
+          font-size: 3.5rem;
           color: var(--primary-color);
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
+          position: relative;
+          z-index: 1;
         }
         .action-card .action-title, .feature-card .feature-title {
-          font-size: 1.4rem;
+          font-size: 1.5rem;
           font-weight: 700;
-          margin-bottom: 0.8rem;
+          margin-bottom: 1rem;
+          position: relative;
+          z-index: 1;
         }
         .action-card .action-desc, .feature-card .feature-desc {
           color: #555;
           flex-grow: 1;
+          position: relative;
+          z-index: 1;
+          line-height: 1.6;
         }
         .action-card .action-btn {
-          margin-top: 1.5rem;
+          margin-top: 2rem;
+          position: relative;
+          z-index: 1;
         }
 
         #about {
-          padding: 60px 15px;
-          background: #fff;
-          border-radius: 12px;
-          max-width: 900px;
-          margin: 2rem auto;
-          box-shadow: 0 8px 25px var(--card-shadow);
+          padding: 100px 15px;
+          background: #f8f9fa;
+          border-radius: 0;
+          max-width: 1000px;
+          margin: 0 auto;
+          position: relative;
+        }
+        #about::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 5px;
+          background: var(--primary-color);
         }
 
         #how-it-works {
-          padding: 60px 15px;
+          padding: 100px 15px;
           background: #fff;
-          border-radius: 12px;
-          max-width: 1000px;
-          margin: 3rem auto;
-          box-shadow: 0 8px 25px var(--card-shadow);
+          border-radius: 0;
+          max-width: 1200px;
+          margin: 0 auto;
+          position: relative;
+        }
+        #how-it-works::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 5px;
+          background: var(--primary-color);
         }
         .step {
           text-align: center;
-          padding: 1.3rem;
+          padding: 2rem 1.5rem;
+          position: relative;
         }
+        .step::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 60px;
+          background: var(--primary-color);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: bold;
+          font-size: 1.2rem;
+          z-index: 1;
+        }
+        .step:nth-child(1)::before { content: '1'; }
+        .step:nth-child(2)::before { content: '2'; }
+        .step:nth-child(3)::before { content: '3'; }
+        .step:nth-child(4)::before { content: '4'; }
+        .step:nth-child(5)::before { content: '5'; }
+        .step:nth-child(6)::before { content: '6'; }
+        .step:nth-child(7)::before { content: '7'; }
+        .step:nth-child(8)::before { content: '8'; }
         .step-icon {
           font-size: 3.5rem;
           color: var(--primary-color);
-          margin-bottom: 0.7rem;
+          margin-bottom: 1rem;
+          margin-top: 1.5rem;
         }
         .step-title {
           font-weight: 700;
-          font-size: 1.3rem;
-          margin-bottom: 0.5rem;
+          font-size: 1.4rem;
+          margin-bottom: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
         .step-desc {
           color: #555;
           font-size: 1rem;
           max-width: 320px;
           margin: 0 auto;
+          line-height: 1.6;
         }
         .step-details {
           font-size: 0.9rem;
-          color: #666;
-          margin-top: 0.5rem;
+          color: #777;
+          margin-top: 0.8rem;
           max-width: 340px;
-          margin: 0 auto;
+          margin: 0.8rem auto 0;
+          line-height: 1.5;
         }
 
         footer {
-          background: var(--primary-color);
+          background: var(--secondary-color);
           color: white;
-          padding: 25px 0;
+          padding: 40px 0 20px;
         }
         footer a {
           color: white;
           margin: 0 10px;
           font-size: 1.2rem;
+          transition: color 0.3s ease;
         }
         footer a:hover {
-          color: var(--secondary-color);
+          color: var(--primary-color);
           text-decoration: none;
         }
         footer .social-icons {
-          margin-top: 10px;
+          margin-top: 15px;
         }
 
         /* Chatbot & responsive */
@@ -199,20 +322,21 @@
           background: var(--primary-color);
           color: white;
           border-radius: 50%;
-          width: 58px;
-          height: 58px;
+          width: 60px;
+          height: 60px;
           border: none;
           cursor: pointer;
-          box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+          box-shadow: 0 5px 15px rgba(0, 160, 227, 0.4);
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 1.7rem;
           z-index: 1100;
-          transition: background 0.3s;
+          transition: all 0.3s ease;
         }
         #chatbot-btn:hover {
           background: var(--secondary-color);
+          transform: scale(1.05);
         }
         #chatbox {
           position: fixed;
@@ -221,17 +345,18 @@
           width: 350px;
           max-width: 90vw;
           background: white;
-          border-radius: 12px;
+          border-radius: 0;
           box-shadow: 0 10px 30px rgba(0,0,0,0.2);
           display: none;
           flex-direction: column;
           overflow: hidden;
           z-index: 1101;
+          border-top: 3px solid var(--primary-color);
         }
         #chatbox header {
           background: var(--primary-color);
           color: white;
-          padding: 12px 20px;
+          padding: 15px 20px;
           font-weight: 700;
           font-size: 1.1rem;
           display: flex;
@@ -244,6 +369,10 @@
           color: white;
           font-size: 1.4rem;
           cursor: pointer;
+          transition: color 0.3s ease;
+        }
+        #chatbox header button:hover {
+          color: var(--secondary-color);
         }
         #chatbox .messages {
           padding: 15px 20px;
@@ -259,7 +388,7 @@
         }
         #chatbox .input-area input {
           flex-grow: 1;
-          padding: 10px 15px;
+          padding: 12px 15px;
           border: none;
           font-size: 1rem;
           outline: none;
@@ -278,8 +407,8 @@
         .message {
           margin-bottom: 12px;
           max-width: 80%;
-          padding: 8px 14px;
-          border-radius: 15px;
+          padding: 10px 15px;
+          border-radius: 0;
           clear: both;
           font-size: 0.9rem;
           line-height: 1.3;
@@ -288,85 +417,129 @@
           background: var(--primary-color);
           color: white;
           float: right;
-          border-bottom-right-radius: 3px;
+          border-bottom-left-radius: 15px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 5px;
         }
         .message.bot {
           background: #e2e8f0;
           color: var(--text-dark);
           float: left;
-          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 15px;
+          border-top-right-radius: 15px;
+          border-top-left-radius: 5px;
+        }
+
+        /* Mercedes-style sections */
+        .mercedes-section {
+          padding: 100px 0;
+          position: relative;
+        }
+        .mercedes-section.dark {
+          background: var(--secondary-color);
+          color: white;
+        }
+        .mercedes-section.light {
+          background: #f8f9fa;
+        }
+        .mercedes-section.white {
+          background: white;
+        }
+
+        .stat-number {
+          font-size: 3rem;
+          font-weight: 700;
+          color: var(--primary-color);
+          margin-bottom: 0.5rem;
+        }
+        .stat-label {
+          font-size: 1.1rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .btn-outline-primary {
+          border: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          border-radius: 0;
+          padding: 0.7rem 2rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+        }
+        .btn-outline-primary:hover {
+          background: var(--primary-color);
+          color: white;
         }
 
         @media (max-width: 768px) {
+          #heroCarousel {
+            height: 70vh;
+            min-height: 500px;
+          }
+          #heroCarousel .carousel-item {
+            height: 70vh;
+            min-height: 500px;
+          }
           #heroCarousel .carousel-caption {
             max-width: 90vw;
             bottom: 15%;
-            font-size: 0.95rem;
-            padding: 1rem;
+            left: 5%;
+            padding: 2rem;
           }
           #heroCarousel .carousel-caption h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
           }
           #heroCarousel .carousel-caption p {
-            font-size: 1rem;
+            font-size: 1.1rem;
           }
           #chatbox {
             width: 90vw;
             right: 5vw;
             bottom: 80px;
           }
+          .card-section, #about, #how-it-works {
+            padding: 60px 15px;
+          }
         }
-         /* Amazon-style footer section */
+
+        /* Amazon-style footer section */
         .amazon-footer {
-          background-color: #2d3748;
+          background-color: #1a1a1a;
           color: white;
-          padding: 40px 0;
+          padding: 60px 0 40px;
         }
         .amazon-footer h5 {
           margin-bottom: 20px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-size: 1.1rem;
         }
         .amazon-footer ul {
           list-style: none;
           padding: 0;
         }
         .amazon-footer ul li {
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
         .amazon-footer ul li a {
-          color: white;
+          color: #ccc;
           text-decoration: none;
+          transition: color 0.3s ease;
         }
         .amazon-footer ul li a:hover {
-          text-decoration: underline;
-        }
-        footer {
-          background: var(--primary-color);
           color: white;
-          padding: 25px 0;
-        }
-        footer a {
-          color: white;
-          margin: 0 10px;
-          font-size: 1.2rem;
-        }
-        footer a:hover {
-          color: var(--secondary-color);
           text-decoration: none;
-        }
-        footer .social-icons {
-          margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/images/logo.png" alt="Care & Share"
-                 style="height: 40px; vertical-align: middle; margin-right: 10px;">
+            <span style="font-weight: 300;">CARE</span> <strong>&</strong> <span style="font-weight: 300;">SHARE</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -394,7 +567,7 @@
                  class="d-block w-100" alt="Donate" />
             <div class="carousel-caption text-start">
                 <h1>Care & Share</h1>
-                <p>A trustworthy platform to donate, exchange, and resell with ease.</p>
+                <p>A premium platform for donating, exchanging, and reselling with elegance and purpose.</p>
                 <a href="/register" class="btn btn-primary">Get Started</a>
             </div>
         </div>
@@ -403,7 +576,7 @@
                  class="d-block w-100" alt="Community" />
             <div class="carousel-caption">
                 <h1>Connect With Community</h1>
-                <p>Exchange and share resources with people near you.</p>
+                <p>Exchange and share resources with people near you in a sophisticated environment.</p>
                 <a href="#features" class="btn btn-primary">Learn More</a>
             </div>
         </div>
@@ -412,7 +585,7 @@
                  class="d-block w-100" alt="Sustainability" />
             <div class="carousel-caption text-end">
                 <h1>Promote Sustainability</h1>
-                <p>Reduce waste by reselling or donating items you no longer need.</p>
+                <p>Reduce waste by reselling or donating items with our premium platform experience.</p>
                 <a href="#how-it-works" class="btn btn-primary">See How</a>
             </div>
         </div>
@@ -426,6 +599,30 @@
         <span class="carousel-control-next-icon"></span>
     </button>
 </div>
+
+<!-- Stats Section -->
+<section class="mercedes-section white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Items Shared</div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number">5,000+</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Cities</div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-number">15 Tons</div>
+                <div class="stat-label">Waste Reduced</div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- What You Can Do Section -->
 <section id="actions" class="card-section">
@@ -467,7 +664,7 @@
 </section>
 
 <!-- Features Section -->
-<section id="features" class="card-section">
+<section id="features" class="mercedes-section light">
     <div class="container">
         <h2 class="section-title">Features</h2>
         <div class="row g-4">
@@ -518,83 +715,80 @@
 </section>
 
 <!-- About Section -->
-<section id="about">
+<section id="about" class="mercedes-section white">
     <div class="container">
         <h2 class="section-title">About Care & Share</h2>
-        <p>
+        <p class="lead text-center mb-5">
             Care & Share is more than a platform — it's a movement to empower communities through sharing,
-            sustainability, and human connection. Whether you're donating unused items, exchanging essentials,
-            or earning from pre-loved goods, you're contributing to a better, more conscious world.
+            sustainability, and human connection.
         </p>
-        <p>
-            Our mission is simple: <strong>reduce waste</strong>, <strong>promote reuse</strong>, and
-            <strong>connect people</strong>. By bridging the gap between what people have and what others need,
-            we help extend the lifecycle of goods while building trust and empathy.
-        </p>
-        <ul>
-            <li><strong>Community-First:</strong> We prioritize safety, transparency, and local impact.</li>
-            <li><strong>Eco-Friendly:</strong> Every donation or resale reduces landfill contribution.</li>
-            <li><strong>Rewarding Experience:</strong> Earn points, badges, and gratitude by being active.</li>
-        </ul>
-        <p>
-            Join thousands of users who believe that one person's surplus can be another's solution. Together,
-            we care — and share.
-        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Whether you're donating unused items, exchanging essentials,
+                    or earning from pre-loved goods, you're contributing to a better, more conscious world.
+                </p>
+                <p>
+                    Our mission is simple: <strong>reduce waste</strong>, <strong>promote reuse</strong>, and
+                    <strong>connect people</strong>. By bridging the gap between what people have and what others need,
+                    we help extend the lifecycle of goods while building trust and empathy.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> <strong>Community-First:</strong> We prioritize safety, transparency, and local impact.</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> <strong>Eco-Friendly:</strong> Every donation or resale reduces landfill contribution.</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> <strong>Rewarding Experience:</strong> Earn points, badges, and gratitude by being active.</li>
+                </ul>
+                <p>
+                    Join thousands of users who believe that one person's surplus can be another's solution. Together,
+                    we care — and share.
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- How It Works Section -->
-<section id="how-it-works">
+<section id="how-it-works" class="mercedes-section light">
     <div class="container">
         <h2 class="section-title">How It Works</h2>
-        <div class="row justify-content-center gy-4">
-            <div class="col-md-4 step">
+        <div class="row justify-content-center gy-5">
+            <div class="col-md-4 col-sm-6 step">
                 <div class="step-icon"><i class="fa-solid fa-user-plus"></i></div>
-                <div class="step-title">1. Register & Create Profile</div>
+                <div class="step-title">Register & Create Profile</div>
                 <div class="step-desc">Sign up with your email and set your location to see nearby listings.</div>
                 <div class="step-details">Add your photo, name, interests and preferences for smoother connections.</div>
             </div>
-            <div class="col-md-4 step">
+            <div class="col-md-4 col-sm-6 step">
                 <div class="step-icon"><i class="fa-solid fa-list-check"></i></div>
-                <div class="step-title">2. List Your Items</div>
+                <div class="step-title">List Your Items</div>
                 <div class="step-desc">Upload photos, description, condition, and price or exchange preference.</div>
                 <div class="step-details">Categorize your item for better visibility to the right audience.</div>
             </div>
-            <div class="col-md-4 step">
+            <div class="col-md-4 col-sm-6 step">
                 <div class="step-icon"><i class="fa-solid fa-search"></i></div>
-                <div class="step-title">3. Browse Listings</div>
+                <div class="step-title">Browse Listings</div>
                 <div class="step-desc">Search for items by category, location, or condition.</div>
                 <div class="step-details">Use filters to narrow down to what you really want.</div>
             </div>
-            <div class="col-md-4 step">
+            <div class="col-md-4 col-sm-6 step">
                 <div class="step-icon"><i class="fa-solid fa-comments"></i></div>
-                <div class="step-title">4. Chat Securely</div>
+                <div class="step-title">Chat Securely</div>
                 <div class="step-desc">Reach out to users to discuss deals, trades, or pickups.</div>
                 <div class="step-details">Your contact info is hidden until you choose to share it.</div>
             </div>
-            <div class="col-md-4 step">
+            <div class="col-md-4 col-sm-6 step">
                 <div class="step-icon"><i class="fa-solid fa-truck"></i></div>
-                <div class="step-title">5. Pick up or Deliver</div>
+                <div class="step-title">Pick up or Deliver</div>
                 <div class="step-desc">Arrange safe handover in person or via courier.</div>
                 <div class="step-details">Share address details or shipping information as needed.</div>
             </div>
-            <div class="col-md-4 step">
+            <div class="col-md-4 col-sm-6 step">
                 <div class="step-icon"><i class="fa-solid fa-heart"></i></div>
-                <div class="step-title">6. Grow the Community</div>
+                <div class="step-title">Grow the Community</div>
                 <div class="step-desc">Earn badges and rewards for active participation.</div>
                 <div class="step-details">Introduce new users and spread kindness.</div>
-            </div>
-            <div class="col-md-4 step">
-                <div class="step-icon"><i class="fa-solid fa-shield-check"></i></div>
-                <div class="step-title">7. Stay Verified</div>
-                <div class="step-desc">Get verified for enhanced trust and visibility.</div>
-                <div class="step-details">Verified profiles are prioritized in listings and matches.</div>
-            </div>
-            <div class="col-md-4 step">
-                <div class="step-icon"><i class="fa-solid fa-chart-line"></i></div>
-                <div class="step-title">8. Track Your Impact</div>
-                <div class="step-desc">View how many items you've donated, saved, or traded.</div>
-                <div class="step-details">Feel good and keep growing your contribution to sustainability.</div>
             </div>
         </div>
     </div>
@@ -604,7 +798,7 @@
 <section class="amazon-footer">
     <div class="container">
         <div class="row text-start">
-            <div class="col-md-3 mb-3">
+            <div class="col-md-3 mb-4">
                 <h5>Get to Know Us</h5>
                 <ul>
                     <li><a href="#">About Care & Share</a></li>
@@ -613,7 +807,7 @@
                     <li><a href="#">Our Impact</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-md-3 mb-4">
                 <h5>Connect with Us</h5>
                 <ul>
                     <li><a href="#">Facebook</a></li>
@@ -621,7 +815,7 @@
                     <li><a href="#">Instagram</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-md-3 mb-4">
                 <h5>Make a Difference</h5>
                 <ul>
                     <li><a href="#">Start Donating</a></li>
@@ -631,7 +825,7 @@
                     <li><a href="#">Success Stories</a></li>
                 </ul>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-md-3 mb-4">
                 <h5>Let Us Help You</h5>
                 <ul>
                     <li><a href="#">Your Account</a></li>
@@ -745,6 +939,18 @@
           appendMessage('Hello! I\'m your Care & Share assistant. How can I help you today?', 'bot');
         }, 300);
         firstOpen = false;
+      }
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar-custom');
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 15px rgba(0,0,0,0.1)';
+      } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
       }
     });
 </script>
