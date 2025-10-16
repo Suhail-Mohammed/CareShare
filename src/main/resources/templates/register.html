@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Care & Share — Register</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         * {
@@ -15,11 +15,13 @@
           box-sizing: border-box;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        html, body {
-          background: rgba(6, 20, 29, 0.85);
-          height: 100%;
-          margin: 0;
+
+        :root {
+          --primary-color: #00A0E3; /* Mercedes blue */
+          --secondary-color: #000000; /* Black for contrast */
+          --accent-color: #E6F7FF; /* Light blue accent */
         }
+
         body {
           height: 100vh;
           display: flex;
@@ -28,6 +30,7 @@
           background: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
           position: relative;
         }
+
         body::before {
           content: "";
           position: absolute;
@@ -38,214 +41,368 @@
           background: rgba(6, 20, 29, 0.85);
           z-index: 0;
         }
+
         .register-box {
           position: relative;
+          display: flex;
+          width: 850px;
+          min-height: 550px;
+          border-radius: 0;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.95);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
           z-index: 1;
-          width: 450px;
-          max-height: 90vh;
-          overflow-y: auto;
-          background: rgba(0, 0, 0, 0.6);
-          box-shadow: 0 0 30px rgba(40, 167, 69, 0.4);
-          padding: 30px 30px;
-          border-radius: 12px;
-          color: #fff;
-          box-sizing: border-box;
+          border-top: 5px solid var(--primary-color);
         }
-        .register-box h2 {
-          font-size: 26px;
+
+        /* Left side - form */
+        .left {
+          flex: 1.2;
+          background: #fff;
+          padding: 50px 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          color: #333;
+        }
+
+        .register-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 90px;
+          height: 90px;
+          margin: 0 auto 20px auto;
+          background: rgba(0, 160, 227, 0.1);
+          border-radius: 50%;
+          font-size: 40px;
+          color: var(--primary-color);
+          border: 2px solid var(--primary-color);
+        }
+
+        .left h2 {
+          font-size: 28px;
           margin-bottom: 30px;
           text-align: center;
-          color: #28a745;
+          color: var(--secondary-color);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          position: relative;
+          padding-bottom: 15px;
         }
+
+        .left h2::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background-color: var(--primary-color);
+        }
+
         .input-box {
           position: relative;
-          margin-bottom: 25px;
+          margin-bottom: 20px;
         }
+
         .input-box input {
           width: 100%;
-          padding: 16px 50px 16px 16px;
-          border: none;
+          padding: 14px 45px 14px 15px;
+          border: 1px solid #ddd;
           outline: none;
-          border-radius: 8px;
-          background: #142733;
-          color: #fff;
-          font-size: 16px;
+          border-radius: 0;
+          background: #fff;
+          color: #333;
+          font-size: 15px;
           transition: 0.3s;
         }
+
         .input-box input:focus {
-          box-shadow: 0 0 10px #28a745;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 2px rgba(0, 160, 227, 0.2);
         }
+
         .input-box i {
           position: absolute;
-          right: 16px;
+          right: 15px;
           top: 50%;
           transform: translateY(-50%);
           color: #aaa;
           font-size: 18px;
         }
+
         .btn {
           width: 100%;
-          padding: 16px;
+          padding: 14px;
           border: none;
-          border-radius: 25px;
-          background: linear-gradient(135deg, #28a745, #218838);
+          border-radius: 0;
+          background: var(--primary-color);
           color: #fff;
           font-weight: bold;
-          font-size: 17px;
+          font-size: 16px;
           cursor: pointer;
           margin-top: 15px;
           transition: 0.3s;
+          letter-spacing: 1px;
+          text-transform: uppercase;
         }
+
         .btn:hover {
+          background: var(--secondary-color);
           transform: translateY(-2px);
-          box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        .signup {
-          margin-top: 20px;
-          font-size: 15px;
+
+        .login {
+          margin-top: 15px;
+          font-size: 14px;
           text-align: center;
+          color: #666;
         }
-        .signup a {
-          color: #28a745;
+
+        .login a {
+          display: inline-block;
+          margin-top: 6px;
+          color: var(--primary-color);
+          text-decoration: none;
+          font-weight: 600;
+        }
+
+        .login a.text-danger {
+          color: #dc3545;
+          display: block;
+          margin-top: 10px;
           text-decoration: none;
         }
-        .feedback {
-          font-size: 0.95rem;
-          margin-top: 4px;
+
+        .login a:hover {
+          text-decoration: underline;
         }
-        /* Scrollbar styling for WebKit browsers */
-        .register-box::-webkit-scrollbar {
-          width: 8px;
+
+        /* Right side - welcome */
+        .right {
+          flex: 0.8;
+          background: linear-gradient(135deg, var(--primary-color), #0078b5);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          color: #fff;
+          padding: 40px;
+          position: relative;
+          overflow: hidden;
         }
-        .register-box::-webkit-scrollbar-track {
-          background-color: rgba(6, 20, 29, 0.85);
+
+        .right::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=500&q=60') no-repeat center center/cover;
+          opacity: 0.2;
+          z-index: 0;
         }
-        .register-box::-webkit-scrollbar-thumb {
-          background-color: #218838;
-          border-radius: 10px;
+
+        .right-content {
+          position: relative;
+          z-index: 1;
         }
-        .register-box::-webkit-scrollbar-thumb:hover {
-          background-color: #28a745;
+
+        .right h2 {
+          font-size: 32px;
+          margin-bottom: 15px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          font-weight: 700;
         }
-        @media (max-width: 500px) {
+
+        .right p {
+          font-size: 16px;
+          max-width: 250px;
+          line-height: 1.6;
+          margin-bottom: 20px;
+        }
+
+        .features-list {
+          text-align: left;
+          margin-top: 20px;
+        }
+
+        .features-list li {
+          margin-bottom: 10px;
+          display: flex;
+          align-items: center;
+        }
+
+        .features-list i {
+          margin-right: 10px;
+          color: #fff;
+        }
+
+        #alert {
+          margin-bottom: 15px;
+          border-radius: 0;
+          border: none;
+        }
+
+        .alert-success {
+          background: rgba(0, 160, 227, 0.1);
+          color: var(--primary-color);
+          border-left: 4px solid var(--primary-color);
+        }
+
+        .alert-danger {
+          background: rgba(220, 53, 69, 0.1);
+          color: #dc3545;
+          border-left: 4px solid #dc3545;
+        }
+
+        .form-row {
+          display: flex;
+          gap: 15px;
+        }
+
+        .form-row .input-box {
+          flex: 1;
+        }
+
+        @media (max-width: 900px) {
           .register-box {
-            width: 90vw;
-            padding: 20px 15px;
+            width: 90%;
+            flex-direction: column;
+            min-height: auto;
+          }
+
+          .right {
+            display: none;
           }
         }
     </style>
 </head>
 <body>
+
 <div class="register-box">
-    <h2>Register</h2>
-
-    <form id="registerForm" novalidate>
-        <div class="input-box">
-            <input id="firstName" name="firstName" type="text" placeholder="First Name" required />
-            <i class="bi bi-person-fill"></i>
-        </div>
-        <div class="input-box">
-            <input id="lastName" name="lastName" type="text" placeholder="Last Name" required />
-            <i class="bi bi-person-fill"></i>
-        </div>
-        <div class="input-box">
-            <input id="email" name="email" type="email" placeholder="Email Address" required />
-            <i class="bi bi-envelope-fill"></i>
-        </div>
-        <div class="input-box">
-            <input id="password" name="password" type="password" placeholder="Password" required />
-            <i class="bi bi-lock-fill"></i>
-        </div>
-        <div class="input-box">
-            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" required />
-            <i class="bi bi-lock-fill"></i>
-            <div id="passwordMatchFeedback" class="feedback"></div>
+    <!-- Left -->
+    <div class="left">
+        <div class="register-icon">
+            <i class="bi bi-person-plus-fill"></i>
         </div>
 
-        <button class="btn" type="submit">Register</button>
-    </form>
+        <h2>Create Account</h2>
 
-    <div class="signup">
-        Already have an account? <a href="/login">Login</a>
+        <div id="alert" class="alert d-none" role="alert"></div>
+
+        <form id="registerForm">
+            <div class="form-row">
+                <div class="input-box">
+                    <input id="firstName" name="firstName" type="text" placeholder="First Name" required />
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <div class="input-box">
+                    <input id="lastName" name="lastName" type="text" placeholder="Last Name" required />
+                    <i class="bi bi-person-fill"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <input id="email" name="email" type="email" placeholder="Email Address" required />
+                <i class="bi bi-envelope-fill"></i>
+            </div>
+
+            <div class="form-row">
+                <div class="input-box">
+                    <input id="password" name="password" type="password" placeholder="Password" required />
+                    <i class="bi bi-lock-fill"></i>
+                </div>
+                <div class="input-box">
+                    <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" required />
+                    <i class="bi bi-lock-fill"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <input id="location" name="location" type="text" placeholder="City, State" required />
+                <i class="bi bi-geo-alt-fill"></i>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="terms" required>
+                <label class="form-check-label" for="terms" style="font-size: 14px;">
+                    I agree to the <a href="/terms" style="color: var(--primary-color);">Terms of Service</a> and <a href="/privacy" style="color: var(--primary-color);">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <div class="login">
+            Already have an account? <a href="/login">Sign In</a>
+        </div>
+    </div>
+
+    <!-- Right -->
+    <div class="right">
+        <div class="right-content">
+            <h2>JOIN OUR COMMUNITY</h2>
+            <p>Where Care Meets Share <strong>Care & Share</strong>.</p>
+
+            <div class="features-list">
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle-fill"></i> Donate items with purpose</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Exchange with trusted members</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Resell sustainably</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Connect locally</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Track your impact</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Bootstrap Modal for success -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark text-white">
-            <div class="modal-header border-0">
-                <h5 class="modal-title" id="successModalLabel">Registration Successful</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="successModalBody">
-                <!-- Success message will be inserted here -->
-            </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-primary" id="modalOkBtn">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-    const passwordMatchFeedback = document.getElementById('passwordMatchFeedback');
-    const registerForm = document.getElementById('registerForm');
-    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-    const modalOkBtn = document.getElementById('modalOkBtn');
-    const successModalBody = document.getElementById('successModalBody');
+    const showAlert = (message, type = 'success') => {
+      const alertEl = document.getElementById('alert');
+      alertEl.className = 'alert alert-' + type;
+      alertEl.innerText = message;
+      alertEl.classList.remove('d-none');
 
-    function checkPasswordMatch() {
-      if (!confirmPasswordInput.value) {
-        passwordMatchFeedback.textContent = '';
-        return;
-      }
-      if (passwordInput.value === confirmPasswordInput.value) {
-        passwordMatchFeedback.textContent = '✅ Passwords match';
-        passwordMatchFeedback.className = 'feedback text-success';
-      } else {
-        passwordMatchFeedback.textContent = '❌ Passwords do not match';
-        passwordMatchFeedback.className = 'feedback text-danger';
+      // Auto hide success messages after 3 seconds
+      if (type === 'success') {
+        setTimeout(() => {
+          alertEl.classList.add('d-none');
+        }, 3000);
       }
     }
 
-    passwordInput.addEventListener('input', checkPasswordMatch);
-    confirmPasswordInput.addEventListener('input', checkPasswordMatch);
-
-    registerForm.addEventListener('submit', async (e) => {
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const location = document.getElementById('location').value;
+      const terms = document.getElementById('terms').checked;
+
       // Basic validation
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = passwordInput.value;
-
-      if (!firstName || !lastName || !email || !password) {
-        alert('❌ Please fill in all fields.');
+      if (!firstName || !lastName || !email || !password || !confirmPassword || !location) {
+        showAlert('Please fill in all fields', 'danger');
         return;
       }
 
-      if (password.length < 6) {
-        alert('❌ Password must be at least 6 characters long.');
-        passwordInput.focus();
+      if (password !== confirmPassword) {
+        showAlert('Passwords do not match', 'danger');
         return;
       }
 
-      if (passwordInput.value !== confirmPasswordInput.value) {
-        alert('❌ Passwords do not match.');
-        confirmPasswordInput.focus();
-        return;
-      }
-
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('❌ Please enter a valid email address.');
-        document.getElementById('email').focus();
+      if (!terms) {
+        showAlert('Please accept the Terms of Service and Privacy Policy', 'danger');
         return;
       }
 
@@ -253,7 +410,8 @@
         firstName: firstName,
         lastName: lastName,
         email: email,
-        password: password
+        password: password,
+        location: location
       };
 
       try {
@@ -268,66 +426,62 @@
         const data = await res.json();
 
         if (!res.ok) {
-          // Handle error response
-          const errorMessage = data.message || 'Registration failed. Please try again.';
-          alert('❌ ' + errorMessage);
+          showAlert('Registration failed: ' + (data.message || 'Please try again'), 'danger');
           return;
         }
 
-        // Success case - data should contain message, email, firstName
-        successModalBody.innerHTML = `
-            <p>🎉 ${data.message || 'Registration successful!'}</p>
-            <p>Welcome to Care & Share, <strong>${data.firstName || firstName}</strong>!</p>
-            <p>You can now login with your email: <strong>${data.email || email}</strong></p>
-        `;
-        successModal.show();
+        showAlert('Registration successful! Redirecting to login...', 'success');
 
-        // Clear form
-        registerForm.reset();
-        passwordMatchFeedback.textContent = '';
-
+        // Redirect to login page
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 2000);
       } catch (err) {
         console.error('Registration error:', err);
-        alert('⚠️ Network error: Please check your connection and try again.');
+        showAlert('Network error: Please try again', 'danger');
       }
     });
 
-    modalOkBtn.addEventListener('click', () => {
-      successModal.hide();
-      window.location.href = '/login';
+    // Password strength indicator (optional enhancement)
+    document.getElementById('password').addEventListener('input', function() {
+      const password = this.value;
+      const strengthIndicator = document.getElementById('password-strength');
+
+      // Create strength indicator if it doesn't exist
+      if (!strengthIndicator) {
+        const indicator = document.createElement('div');
+        indicator.id = 'password-strength';
+        indicator.style.fontSize = '12px';
+        indicator.style.marginTop = '5px';
+        this.parentNode.appendChild(indicator);
+      }
+
+      // Simple password strength check
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+      const indicator = document.getElementById('password-strength');
+      const messages = ['Very Weak', 'Weak', 'Medium', 'Strong', 'Very Strong'];
+      const colors = ['#dc3545', '#dc3545', '#ffc107', '#28a745', '#28a745'];
+
+      if (password.length > 0) {
+        indicator.textContent = `Strength: ${messages[strength]}`;
+        indicator.style.color = colors[strength];
+      } else {
+        indicator.textContent = '';
+      }
     });
 
-    // Enter key support for form submission
-    registerForm.addEventListener('keypress', (e) => {
+    // Enter key support
+    document.getElementById('confirmPassword').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        e.preventDefault();
-        registerForm.dispatchEvent(new Event('submit'));
-      }
-    });
-
-    // Check if user is already logged in
-    window.addEventListener('DOMContentLoaded', () => {
-      const token = localStorage.getItem('jwtToken');
-      if (token) {
-        // Verify token is still valid
-        fetch('/api/user/me', {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => {
-          if (response.ok) {
-            window.location.href = '/dashboard';
-          }
-        })
-        .catch(() => {
-          // Token is invalid, stay on register page
-          localStorage.removeItem('jwtToken');
-        });
+        document.getElementById('registerForm').dispatchEvent(new Event('submit'));
       }
     });
 </script>
+
 </body>
 </html>

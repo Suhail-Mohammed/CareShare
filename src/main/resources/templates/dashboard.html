@@ -8,55 +8,29 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
         :root {
-          --primary-color: #28a745;
-          --secondary-color: #218838;
-          --accent-color: #71c787;
+          --primary-color: #00A0E3; /* Mercedes blue */
+          --secondary-color: #000000; /* Black for contrast */
+          --accent-color: #E6F7FF; /* Light blue accent */
           --bg-light: #f8fafc;
           --text-dark: #1E293B;
           --card-shadow: rgba(0,0,0,0.05);
         }
         body {
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: var(--bg-light);
+          background: #fff;
           color: var(--text-dark);
-          padding-top: 72px;
+          padding-top: 80px;
         }
         .navbar-custom {
-          background: #fff;
+          background: rgba(255, 255, 255, 0.95);
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           position: fixed;
           width: 100%;
           z-index: 1050;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+          border-bottom: 1px solid #e9ecef;
         }
-        /* Add to your existing CSS */
-            .product-image {
-                width: 80px;
-                height: 80px;
-                border-radius: 8px;
-                object-fit: cover;
-                border: 2px solid #e9ecef;
-                transition: all 0.3s ease;
-            }
-
-            .product-image:hover {
-                transform: scale(1.05);
-                border-color: var(--primary-color);
-            }
-
-            .image-placeholder {
-                width: 80px;
-                height: 80px;
-                background: linear-gradient(45deg, #f8f9fa, #e9ecef);
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #6c757d;
-                font-size: 0.7rem;
-                border: 2px dashed #dee2e6;
-                text-align: center;
-                padding: 5px;
-            }
         .navbar-brand {
           font-weight: 700;
           color: var(--primary-color);
@@ -73,18 +47,35 @@
           font-weight: 500;
           margin-left: 1rem;
           cursor: pointer;
+          position: relative;
+          transition: color 0.3s ease;
         }
         .nav-link:hover {
           color: var(--primary-color) !important;
         }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: var(--primary-color);
+          transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+          width: 100%;
+        }
         .dropdown-menu {
           border: none;
           box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-          border-radius: 10px;
+          border-radius: 0;
+          border-top: 3px solid var(--primary-color);
         }
         .dropdown-item {
-          padding: 8px 16px;
+          padding: 10px 16px;
           cursor: pointer;
+          transition: all 0.3s ease;
         }
         .dropdown-item:hover {
           background-color: var(--primary-color);
@@ -93,53 +84,112 @@
 
         /* Dashboard Styles */
         .dashboard-header {
-          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          background: linear-gradient(135deg, var(--primary-color), #0078b5);
           color: white;
-          padding: 60px 0;
+          padding: 80px 0;
           margin-bottom: 40px;
+          position: relative;
+          overflow: hidden;
+        }
+        .dashboard-header::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+          opacity: 0.1;
+          z-index: 0;
+        }
+        .dashboard-header .container {
+          position: relative;
+          z-index: 1;
         }
         .stats-card {
           background: white;
-          border-radius: 15px;
+          border-radius: 0;
           padding: 30px;
-          box-shadow: 0 4px 20px var(--card-shadow);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.08);
           text-align: center;
           margin-bottom: 30px;
-          transition: transform 0.3s ease;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border-top: 3px solid var(--primary-color);
+          position: relative;
+          overflow: hidden;
+        }
+        .stats-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 0;
+          background: var(--accent-color);
+          transition: height 0.3s ease;
+          z-index: 0;
+        }
+        .stats-card:hover::before {
+          height: 100%;
         }
         .stats-card:hover {
-          transform: translateY(-5px);
+          transform: translateY(-8px);
+          box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
         .stats-icon {
           font-size: 3rem;
           color: var(--primary-color);
           margin-bottom: 15px;
+          position: relative;
+          z-index: 1;
         }
         .stats-number {
           font-size: 2.5rem;
           font-weight: bold;
           color: var(--text-dark);
           margin-bottom: 10px;
+          position: relative;
+          z-index: 1;
         }
         .stats-label {
           color: #666;
           font-size: 1.1rem;
+          position: relative;
+          z-index: 1;
         }
         .profile-section {
           background: white;
-          border-radius: 15px;
+          border-radius: 0;
           padding: 40px;
-          box-shadow: 0 4px 20px var(--card-shadow);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.08);
           margin-bottom: 40px;
+          border-top: 3px solid var(--primary-color);
+          position: relative;
+        }
+        .profile-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 0;
+          background: var(--accent-color);
+          transition: height 0.3s ease;
+          z-index: 0;
+        }
+        .profile-section:hover::before {
+          height: 100%;
         }
         .profile-header {
           text-align: center;
           margin-bottom: 30px;
+          position: relative;
+          z-index: 1;
         }
         .profile-avatar {
           width: 120px;
           height: 120px;
-          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          background: linear-gradient(135deg, var(--primary-color), #0078b5);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -147,15 +197,23 @@
           margin: 0 auto 20px;
           font-size: 3rem;
           color: white;
+          border: 3px solid white;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .profile-info {
           margin-bottom: 25px;
+          position: relative;
+          z-index: 1;
         }
         .info-item {
           display: flex;
           justify-content: space-between;
           padding: 12px 0;
           border-bottom: 1px solid #eee;
+          transition: background-color 0.3s ease;
+        }
+        .info-item:hover {
+          background-color: rgba(0, 160, 227, 0.05);
         }
         .info-label {
           font-weight: 600;
@@ -163,34 +221,69 @@
         }
         .info-value {
           color: var(--text-dark);
+          font-weight: 500;
+        }
+
+        /* Product image styles */
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 0;
+            object-fit: cover;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .product-image:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-color);
+        }
+        .image-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 0.7rem;
+            border: 2px dashed #dee2e6;
+            text-align: center;
+            padding: 5px;
         }
 
         /* Amazon-style footer */
         .amazon-footer {
-          background-color: #2d3748;
+          background-color: #1a1a1a;
           color: white;
-          padding: 40px 0;
+          padding: 60px 0 40px;
         }
         .amazon-footer h5 {
           margin-bottom: 20px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-size: 1.1rem;
         }
         .amazon-footer ul {
           list-style: none;
           padding: 0;
         }
         .amazon-footer ul li {
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
         .amazon-footer ul li a {
-          color: white;
+          color: #ccc;
           text-decoration: none;
           cursor: pointer;
+          transition: color 0.3s ease;
         }
         .amazon-footer ul li a:hover {
-          text-decoration: underline;
+          color: white;
+          text-decoration: none;
         }
         footer {
-          background: var(--primary-color);
+          background: var(--secondary-color);
           color: white;
           padding: 25px 0;
         }
@@ -199,9 +292,10 @@
           margin: 0 10px;
           font-size: 1.2rem;
           cursor: pointer;
+          transition: color 0.3s ease;
         }
         footer a:hover {
-          color: var(--secondary-color);
+          color: var(--primary-color);
           text-decoration: none;
         }
         footer .social-icons {
@@ -217,24 +311,49 @@
           border: 2px solid var(--primary-color);
           color: var(--primary-color);
           padding: 15px 25px;
-          border-radius: 10px;
+          border-radius: 0;
           text-decoration: none;
           display: block;
           text-align: center;
           transition: all 0.3s ease;
           margin-bottom: 15px;
           cursor: pointer;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          position: relative;
+          overflow: hidden;
+        }
+        .action-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: var(--primary-color);
+          transition: left 0.3s ease;
+          z-index: 0;
+        }
+        .action-btn:hover::before {
+          left: 0;
         }
         .action-btn:hover {
-          background: var(--primary-color);
           color: white;
           transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .action-btn span {
+          position: relative;
+          z-index: 1;
         }
 
         /* Active nav link */
         .nav-link.active {
           color: var(--primary-color) !important;
           font-weight: 600;
+        }
+        .nav-link.active::after {
+          width: 100%;
         }
 
         /* Section styles for dashboard navigation */
@@ -249,10 +368,122 @@
         .admin-badge {
             background: #dc3545;
             color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 4px 8px;
+            border-radius: 0;
             font-size: 0.7rem;
             margin-left: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Card headers */
+        .card {
+            border: none;
+            border-radius: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-top: 3px solid var(--primary-color);
+        }
+        .card-header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+        }
+
+        /* Form controls */
+        .form-control, .form-select {
+            border-radius: 0;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 160, 227, 0.2);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 0;
+            padding: 12px 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+        .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Badges */
+        .badge {
+            border-radius: 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Alert styling */
+        .alert {
+            border-radius: 0;
+            border: none;
+            border-left: 4px solid;
+        }
+        .alert-info {
+            background: rgba(0, 160, 227, 0.1);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+        }
+        h2 {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 60px 0;
+            }
+            .stats-card {
+                padding: 20px;
+            }
+            .profile-section {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
@@ -262,8 +493,7 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand" onclick="showDashboardHome()">
-            <img src="/images/logo.png" alt="Care & Share" style="height: 40px; width: auto; margin-right: 10px;">
-
+            <span style="font-weight: 300;">CARE</span> <strong>&</strong> <span style="font-weight: 300;">SHARE</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -319,8 +549,8 @@
 <!-- Dashboard Header -->
 <div class="dashboard-header">
     <div class="container text-center">
-        <h1 id="dashboardTitle">Welcome to Your Dashboard</h1>
-        <p class="lead" id="dashboardSubtitle">Manage your donations, exchanges, and resell activities in one place</p>
+        <h1 id="dashboardTitle" style="color: white; text-transform: uppercase; letter-spacing: 2px;">Welcome to Your Dashboard</h1>
+        <p class="lead" id="dashboardSubtitle" style="color: rgba(255,255,255,0.9);">Manage your donations, exchanges, and resell activities in one place</p>
     </div>
 </div>
 
@@ -383,16 +613,16 @@
                 <div class="quick-actions">
                     <h4>Quick Actions</h4>
                     <a class="action-btn" onclick="showSection('items')">
-                        <i class="fa-solid fa-plus me-2"></i>Add New Item
+                        <i class="fa-solid fa-plus me-2"></i><span>Add New Item</span>
                     </a>
                     <a class="action-btn" onclick="showSection('actions')">
-                        <i class="fa-solid fa-hand-holding-heart me-2"></i>Donate Items
+                        <i class="fa-solid fa-hand-holding-heart me-2"></i><span>Donate Items</span>
                     </a>
                     <a class="action-btn" onclick="showSection('actions')">
-                        <i class="fa-solid fa-right-left me-2"></i>Exchange Items
+                        <i class="fa-solid fa-right-left me-2"></i><span>Exchange Items</span>
                     </a>
                     <a class="action-btn" onclick="showSection('actions')">
-                        <i class="fa-solid fa-tag me-2"></i>Resell Items
+                        <i class="fa-solid fa-tag me-2"></i><span>Resell Items</span>
                     </a>
                 </div>
 
@@ -480,13 +710,13 @@
                 <div class="quick-actions">
                     <h5>Quick Actions</h5>
                     <a class="action-btn">
-                        <i class="fa-solid fa-pencil me-2"></i>Edit Profile
+                        <i class="fa-solid fa-pencil me-2"></i><span>Edit Profile</span>
                     </a>
                     <a class="action-btn">
-                        <i class="fa-solid fa-lock me-2"></i>Change Password
+                        <i class="fa-solid fa-lock me-2"></i><span>Change Password</span>
                     </a>
                     <a class="action-btn">
-                        <i class="fa-solid fa-bell me-2"></i>Notification Settings
+                        <i class="fa-solid fa-bell me-2"></i><span>Notification Settings</span>
                     </a>
                 </div>
             </div>
@@ -506,7 +736,7 @@
         </div>
     </div>
 
-    <!-- Add this to the itemsSection in dashboard.html -->
+    <!-- My Items Section -->
     <div id="itemsSection" class="dashboard-section">
         <div class="profile-section">
             <h2>My Items</h2>
@@ -658,8 +888,12 @@
     </div>
 </footer>
 
+<!-- JavaScript remains the same as in your original dashboard.html -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
+    // All your existing JavaScript functions remain exactly the same
+    // Only the styling has been updated to match Mercedes-Benz theme
+
     // Function to show dashboard home
     function showDashboardHome() {
         hideAllSections();
@@ -709,143 +943,143 @@
     }
 
     // Product Management Functions
-function submitProductForm(event) {
-    event.preventDefault();
+    function submitProductForm(event) {
+        event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('name', document.getElementById('productName').value);
-    formData.append('price', document.getElementById('productPrice').value);
-    formData.append('category', document.getElementById('productCategory').value);
-    formData.append('type', document.getElementById('productType').value);
-    formData.append('description', document.getElementById('productDescription').value);
-    formData.append('image', document.getElementById('productImage').files[0]);
+        const formData = new FormData();
+        formData.append('name', document.getElementById('productName').value);
+        formData.append('price', document.getElementById('productPrice').value);
+        formData.append('category', document.getElementById('productCategory').value);
+        formData.append('type', document.getElementById('productType').value);
+        formData.append('description', document.getElementById('productDescription').value);
+        formData.append('image', document.getElementById('productImage').files[0]);
 
-    const token = localStorage.getItem('jwtToken');
+        const token = localStorage.getItem('jwtToken');
 
-    fetch('/api/products/add', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            alert(data.message);
-            document.getElementById('addProductForm').reset();
-            loadMyProducts();
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error submitting product');
-    });
-}
-
-function loadMyProducts(status = 'all') {
-    const token = localStorage.getItem('jwtToken');
-    let url = '/api/products/my-products';
-
-    if (status !== 'all') {
-        url = `/api/products/my-products/${status}`;
+        fetch('/api/products/add', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                document.getElementById('addProductForm').reset();
+                loadMyProducts();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error submitting product');
+        });
     }
 
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
+    function loadMyProducts(status = 'all') {
+        const token = localStorage.getItem('jwtToken');
+        let url = '/api/products/my-products';
+
+        if (status !== 'all') {
+            url = `/api/products/my-products/${status}`;
         }
-    })
-    .then(response => response.json())
-    .then(products => {
-        displayProducts(products);
-    })
-    .catch(error => {
-        console.error('Error loading products:', error);
-    });
-}
 
-function displayProducts(products) {
-    const container = document.getElementById('productsList');
-
-    if (products.length === 0) {
-        container.innerHTML = `
-            <div class="col-12 text-center py-5">
-                <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
-                <p class="text-muted">No products found</p>
-            </div>
-        `;
-        return;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(products => {
+            displayProducts(products);
+        })
+        .catch(error => {
+            console.error('Error loading products:', error);
+        });
     }
 
-    container.innerHTML = products.map(product => `
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100">
-                <img src="${product.imagePath}" class="card-img-top" alt="${product.name}" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">${product.name}</h5>
-                    <p class="card-text">${product.description || 'No description'}</p>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="badge bg-secondary">${product.category}</span>
-                        <span class="badge bg-info">${product.type}</span>
-                    </div>
-                    <p class="card-text"><strong>Price: ₹${product.price}</strong></p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge ${getStatusBadgeClass(product.status)}">
-                            ${product.status}
-                        </span>
-                        <small class="text-muted">${new Date(product.createdAt).toLocaleDateString()}</small>
-                    </div>
-                    ${product.status === 'REJECTED' && product.rejectionReason ? `
-                        <div class="mt-2">
-                            <small class="text-danger"><strong>Reason: </strong>${product.rejectionReason}</small>
+    function displayProducts(products) {
+        const container = document.getElementById('productsList');
+
+        if (products.length === 0) {
+            container.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No products found</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = products.map(product => `
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <img src="${product.imagePath}" class="card-img-top" alt="${product.name}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text">${product.description || 'No description'}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-secondary">${product.category}</span>
+                            <span class="badge bg-info">${product.type}</span>
                         </div>
-                    ` : ''}
+                        <p class="card-text"><strong>Price: ₹${product.price}</strong></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge ${getStatusBadgeClass(product.status)}">
+                                ${product.status}
+                            </span>
+                            <small class="text-muted">${new Date(product.createdAt).toLocaleDateString()}</small>
+                        </div>
+                        ${product.status === 'REJECTED' && product.rejectionReason ? `
+                            <div class="mt-2">
+                                <small class="text-danger"><strong>Reason: </strong>${product.rejectionReason}</small>
+                            </div>
+                        ` : ''}
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
-}
-
-function getStatusBadgeClass(status) {
-    switch(status) {
-        case 'PENDING': return 'bg-warning';
-        case 'APPROVED': return 'bg-success';
-        case 'REJECTED': return 'bg-danger';
-        default: return 'bg-secondary';
-    }
-}
-
-function filterProducts(status) {
-    // Update active button
-    document.querySelectorAll('.btn-group .btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-
-    loadMyProducts(status);
-}
-
-// Initialize product form
-document.addEventListener('DOMContentLoaded', function() {
-    const productForm = document.getElementById('addProductForm');
-    if (productForm) {
-        productForm.addEventListener('submit', submitProductForm);
+        `).join('');
     }
 
-    // Load products when items section is shown
-    const originalShowSection = window.showSection;
-    window.showSection = function(section) {
-        originalShowSection(section);
-        if (section === 'items') {
-            loadMyProducts();
+    function getStatusBadgeClass(status) {
+        switch(status) {
+            case 'PENDING': return 'bg-warning';
+            case 'APPROVED': return 'bg-success';
+            case 'REJECTED': return 'bg-danger';
+            default: return 'bg-secondary';
         }
-    };
-});
+    }
+
+    function filterProducts(status) {
+        // Update active button
+        document.querySelectorAll('.btn-group .btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+
+        loadMyProducts(status);
+    }
+
+    // Initialize product form
+    document.addEventListener('DOMContentLoaded', function() {
+        const productForm = document.getElementById('addProductForm');
+        if (productForm) {
+            productForm.addEventListener('submit', submitProductForm);
+        }
+
+        // Load products when items section is shown
+        const originalShowSection = window.showSection;
+        window.showSection = function(section) {
+            originalShowSection(section);
+            if (section === 'items') {
+                loadMyProducts();
+            }
+        };
+    });
 
     // Function to update active nav state
     function updateNavActiveState(activeSection) {
