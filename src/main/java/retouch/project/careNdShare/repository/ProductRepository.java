@@ -7,16 +7,22 @@ import org.springframework.stereotype.Repository;
 import retouch.project.careNdShare.entity.ProductStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByUserId(Long userId);
     List<Product> findByStatus(ProductStatus status);
     List<Product> findByUserIdAndStatus(Long userId, ProductStatus status);
+    List<Product> findByStatusAndType(ProductStatus status, String type);
 
     @Query("SELECT COUNT(p) FROM Product p WHERE p.status = 'PENDING'")
     long countPendingProducts();
 
     @Query("SELECT COUNT(p) FROM Product p WHERE p.status = 'APPROVED'")
     long countApprovedProducts();
+
+    // Add this method for detailed product view
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.user WHERE p.id = :id AND p.status = 'APPROVED'")
+    Optional<Product> findByIdWithUser(Long id);
 }
