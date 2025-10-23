@@ -20,6 +20,10 @@
           background: #fff;
           color: var(--text-dark);
           padding-top: 80px;
+          transition: all 0.3s ease;
+        }
+        body.fullscreen-available {
+          padding-top: 0;
         }
         .navbar-custom {
           background: rgba(255, 255, 255, 0.95);
@@ -90,6 +94,10 @@
           margin-bottom: 40px;
           position: relative;
           overflow: hidden;
+          transition: all 0.3s ease;
+        }
+        .fullscreen-available .dashboard-header {
+          display: none;
         }
         .dashboard-header::before {
           content: '';
@@ -257,6 +265,11 @@
           background-color: #1a1a1a;
           color: white;
           padding: 60px 0 40px;
+          transition: all 0.3s ease;
+        }
+        .fullscreen-available .amazon-footer,
+        .fullscreen-available footer {
+          display: none;
         }
         .amazon-footer h5 {
           margin-bottom: 20px;
@@ -286,6 +299,7 @@
           background: var(--secondary-color);
           color: white;
           padding: 25px 0;
+          transition: all 0.3s ease;
         }
         footer a {
           color: white;
@@ -362,6 +376,68 @@
         }
         .dashboard-section.active {
             display: block;
+        }
+
+        /* Fullscreen Available Items */
+        .fullscreen-available-items {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: white;
+            z-index: 1040;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .fullscreen-available-items.active {
+            display: flex;
+        }
+        .fullscreen-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+        .fullscreen-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .fullscreen-title {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .close-fullscreen {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        .close-fullscreen:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+        .fullscreen-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px 0;
+            background: #f8f9fa;
         }
 
         /* Admin badge */
@@ -474,6 +550,106 @@
             background-color: var(--primary-color);
         }
 
+        /* Available Items Styles */
+        .product-card {
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-card .card-img-top {
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        /* Filter section styles */
+        .filter-section {
+            background: white;
+            border-radius: 0;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        /* Fullscreen specific styles */
+        .fullscreen-filters {
+            background: white;
+            padding: 25px 0;
+            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 30px;
+        }
+        .fullscreen-filters .row {
+            align-items: center;
+        }
+        .fullscreen-stats {
+            text-align: center;
+        }
+        .items-count-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Product Detail Modal */
+        .product-detail-modal .modal-content {
+            border-radius: 0;
+            border: none;
+            border-top: 3px solid var(--primary-color);
+        }
+        .product-detail-modal .modal-header {
+            background: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            padding: 25px;
+        }
+        .product-detail-modal .modal-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .product-detail-modal .modal-body {
+            padding: 30px;
+        }
+        .product-detail-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border: 2px solid #e9ecef;
+        }
+        .product-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .product-info-label {
+            font-weight: 600;
+            color: #555;
+            min-width: 120px;
+        }
+        .product-info-value {
+            color: var(--text-dark);
+            font-weight: 500;
+            text-align: right;
+            flex: 1;
+        }
+        .seller-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 3px solid var(--primary-color);
+            margin-top: 20px;
+        }
+
         @media (max-width: 768px) {
             .dashboard-header {
                 padding: 60px 0;
@@ -483,6 +659,15 @@
             }
             .profile-section {
                 padding: 30px 20px;
+            }
+            .fullscreen-title {
+                font-size: 1.4rem;
+            }
+            .fullscreen-filters .row > div {
+                margin-bottom: 15px;
+            }
+            .product-detail-modal .modal-body {
+                padding: 20px;
             }
         }
     </style>
@@ -509,6 +694,9 @@
                 </a>
                 <a class="nav-link" onclick="showSection('items')">
                     <i class="fa-solid fa-list"></i> My Items
+                </a>
+                <a class="nav-link" onclick="showAvailableItemsFullscreen()">
+                    <i class="fa-solid fa-grid"></i> Available Items
                 </a>
                 <a class="nav-link" onclick="showSection('activity')">
                     <i class="fa-solid fa-clock-rotate-left"></i> Activity
@@ -618,8 +806,8 @@
                     <a class="action-btn" onclick="showSection('actions')">
                         <i class="fa-solid fa-hand-holding-heart me-2"></i><span>Donate Items</span>
                     </a>
-                    <a class="action-btn" onclick="showSection('actions')">
-                        <i class="fa-solid fa-right-left me-2"></i><span>Exchange Items</span>
+                    <a class="action-btn" onclick="showAvailableItemsFullscreen()">
+                        <i class="fa-solid fa-grid me-2"></i><span>Browse All Items</span>
                     </a>
                     <a class="action-btn" onclick="showSection('actions')">
                         <i class="fa-solid fa-tag me-2"></i><span>Resell Items</span>
@@ -822,11 +1010,106 @@
     <div id="activitySection" class="dashboard-section">
         <div class="profile-section">
             <h2>Activity History</h2>
-            <p class="text-muted">View your complete activity history</p>
+            <p class="text-muted">View your complete activity timeline</p>
 
             <div class="alert alert-info">
                 <i class="fa-solid fa-info-circle me-2"></i>
                 This section will show your complete activity timeline.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fullscreen Available Items Section -->
+<div id="fullscreenAvailableItems" class="fullscreen-available-items">
+    <div class="fullscreen-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="fullscreen-title">Available Items Marketplace</h1>
+                </div>
+                <div class="col-auto">
+                    <button class="close-fullscreen" onclick="closeFullscreenAvailableItems()">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fullscreen-content">
+        <div class="container">
+            <!-- Enhanced Filter Controls -->
+            <div class="fullscreen-filters">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <label for="fullscreenItemTypeFilter" class="form-label">Item Type</label>
+                        <select class="form-select" id="fullscreenItemTypeFilter" onchange="filterFullscreenAvailableItems()">
+                            <option value="all">All Types</option>
+                            <option value="Donate">Donate</option>
+                            <option value="Exchange">Exchange</option>
+                            <option value="Resell">Resell</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="fullscreenCategoryFilter" class="form-label">Category</label>
+                        <select class="form-select" id="fullscreenCategoryFilter" onchange="filterFullscreenAvailableItems()">
+                            <option value="all">All Categories</option>
+                            <option value="old">Old</option>
+                            <option value="new">New</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="fullscreenSortFilter" class="form-label">Sort By</label>
+                        <select class="form-select" id="fullscreenSortFilter" onchange="filterFullscreenAvailableItems()">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="price_low">Price: Low to High</option>
+                            <option value="price_high">Price: High to Low</option>
+                            <option value="name_asc">Name: A to Z</option>
+                            <option value="name_desc">Name: Z to A</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="fullscreen-stats">
+                            <span class="items-count-badge" id="fullscreenItemsCount">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Available Items Grid -->
+            <div id="fullscreenAvailableItemsList" class="row">
+                <!-- Items will be loaded here -->
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted mt-3">Loading available items...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product Detail Modal -->
+<div class="modal fade product-detail-modal" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailModalLabel">Product Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="productDetailContent">
+                    <!-- Product details will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="contactSellerFromModal()">
+                    <i class="fa-solid fa-message me-2"></i>Contact Seller
+                </button>
             </div>
         </div>
     </div>
@@ -843,6 +1126,7 @@
                     <li><a onclick="showProfile()">My Profile</a></li>
                     <li><a onclick="showSection('actions')">My Actions</a></li>
                     <li><a onclick="showSection('items')">My Items</a></li>
+                    <li><a onclick="showAvailableItemsFullscreen()">Available Items</a></li>
                 </ul>
             </div>
             <div class="col-md-3 mb-3">
@@ -859,6 +1143,7 @@
                     <li><a onclick="showSection('actions')">Start Donating</a></li>
                     <li><a onclick="showSection('actions')">Exchange Items</a></li>
                     <li><a onclick="showSection('actions')">Resell Items</a></li>
+                    <li><a onclick="showAvailableItemsFullscreen()">Browse All Items</a></li>
                 </ul>
             </div>
             <div class="col-md-3 mb-3">
@@ -888,14 +1173,19 @@
     </div>
 </footer>
 
-<!-- JavaScript remains the same as in your original dashboard.html -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    // All your existing JavaScript functions remain exactly the same
-    // Only the styling has been updated to match Mercedes-Benz theme
+    // Global variable to store current product details
+    let currentProductDetails = null;
 
     // Function to show dashboard home
     function showDashboardHome() {
+        // First, close fullscreen if it's open
+        if (document.body.classList.contains('fullscreen-available')) {
+            closeFullscreenAvailableItems();
+            return; // Let closeFullscreenAvailableItems handle the navigation
+        }
+
         hideAllSections();
         document.getElementById('dashboardHome').classList.add('active');
         updateNavActiveState('dashboardHome');
@@ -904,6 +1194,12 @@
 
     // Function to show profile section
     function showProfile() {
+        // First, close fullscreen if it's open
+        if (document.body.classList.contains('fullscreen-available')) {
+            closeFullscreenAvailableItems();
+            return;
+        }
+
         hideAllSections();
         document.getElementById('profileSection').classList.add('active');
         updateNavActiveState('profile');
@@ -913,6 +1209,12 @@
 
     // Function to show different sections
     function showSection(section) {
+        // First, close fullscreen if it's open
+        if (document.body.classList.contains('fullscreen-available')) {
+            closeFullscreenAvailableItems();
+            return;
+        }
+
         hideAllSections();
 
         switch(section) {
@@ -925,6 +1227,7 @@
                 document.getElementById('itemsSection').classList.add('active');
                 updateNavActiveState('items');
                 updateDashboardHeader('My Items', 'Manage items you\'ve listed for donation, exchange, or resale');
+                loadMyProducts();
                 break;
             case 'activity':
                 document.getElementById('activitySection').classList.add('active');
@@ -932,6 +1235,25 @@
                 updateDashboardHeader('Activity History', 'View your complete activity timeline');
                 break;
         }
+    }
+
+    // Function to show fullscreen available items
+    function showAvailableItemsFullscreen() {
+        // First hide all regular sections
+        hideAllSections();
+
+        document.body.classList.add('fullscreen-available');
+        document.getElementById('fullscreenAvailableItems').classList.add('active');
+        updateNavActiveState('available');
+        loadFullscreenAvailableItems();
+    }
+
+    // Function to close fullscreen available items
+    function closeFullscreenAvailableItems() {
+        document.body.classList.remove('fullscreen-available');
+        document.getElementById('fullscreenAvailableItems').classList.remove('active');
+        // Return to dashboard home when closing fullscreen
+        showDashboardHome();
     }
 
     // Function to hide all sections
@@ -970,7 +1292,7 @@
                 document.getElementById('addProductForm').reset();
                 loadMyProducts();
             } else {
-                alert('Error: ' + data.message);
+                alert('Error: ' + (data.message || 'Unknown error'));
             }
         })
         .catch(error => {
@@ -994,12 +1316,27 @@
                 'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch products');
+            }
+            return response.json();
+        })
         .then(products => {
             displayProducts(products);
         })
         .catch(error => {
             console.error('Error loading products:', error);
+            const container = document.getElementById('productsList');
+            container.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="fa-solid fa-exclamation-triangle fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">Failed to load products</p>
+                    <button class="btn btn-primary mt-3" onclick="loadMyProducts()">
+                        <i class="fa-solid fa-refresh me-2"></i>Try Again
+                    </button>
+                </div>
+            `;
         });
     }
 
@@ -1011,6 +1348,7 @@
                 <div class="col-12 text-center py-5">
                     <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
                     <p class="text-muted">No products found</p>
+                    <p class="text-muted small">You haven't listed any products yet</p>
                 </div>
             `;
             return;
@@ -1019,10 +1357,12 @@
         container.innerHTML = products.map(product => `
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100">
-                    <img src="${product.imagePath}" class="card-img-top" alt="${product.name}" style="height: 200px; object-fit: cover;">
+                    <img src="${product.imagePath || 'https://via.placeholder.com/300x200?text=No+Image'}"
+                         class="card-img-top" alt="${product.name}"
+                         style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
-                        <p class="card-text">${product.description || 'No description'}</p>
+                        <p class="card-text">${product.description || 'No description available'}</p>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-secondary">${product.category}</span>
                             <span class="badge bg-info">${product.type}</span>
@@ -1032,7 +1372,9 @@
                             <span class="badge ${getStatusBadgeClass(product.status)}">
                                 ${product.status}
                             </span>
-                            <small class="text-muted">${new Date(product.createdAt).toLocaleDateString()}</small>
+                            <small class="text-muted">
+                                ${product.createdAt ? new Date(product.createdAt).toLocaleDateString() : 'Unknown date'}
+                            </small>
                         </div>
                         ${product.status === 'REJECTED' && product.rejectionReason ? `
                             <div class="mt-2">
@@ -1064,6 +1406,298 @@
         loadMyProducts(status);
     }
 
+    // Fullscreen Available Items Functions
+    function loadFullscreenAvailableItems(type = 'all', category = 'all', sort = 'newest') {
+        const token = localStorage.getItem('jwtToken');
+        let url = '/api/products/available';
+
+        const params = new URLSearchParams();
+        if (type !== 'all') params.append('type', type);
+        if (category !== 'all') params.append('category', category);
+        if (sort !== 'newest') params.append('sort', sort);
+
+        if (params.toString()) {
+            url += '?' + params.toString();
+        }
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch available products');
+            }
+            return response.json();
+        })
+        .then(products => {
+            // Apply client-side sorting as fallback
+            const sortedProducts = sortProducts(products, sort);
+            displayFullscreenAvailableItems(sortedProducts);
+        })
+        .catch(error => {
+            console.error('Error loading available items:', error);
+            document.getElementById('fullscreenAvailableItemsList').innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="fa-solid fa-exclamation-triangle fa-2x text-muted mb-3"></i>
+                    <p class="text-muted">Failed to load items. Please try again.</p>
+                    <button class="btn btn-primary mt-3" onclick="loadFullscreenAvailableItems()">
+                        <i class="fa-solid fa-refresh me-2"></i>Retry
+                    </button>
+                </div>
+            `;
+        });
+    }
+
+    // Client-side sorting function (as fallback)
+    function sortProducts(products, sortType) {
+        const sortedProducts = [...products];
+
+        switch(sortType) {
+            case 'newest':
+                return sortedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            case 'oldest':
+                return sortedProducts.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+            case 'price_low':
+                return sortedProducts.sort((a, b) => a.price - b.price);
+            case 'price_high':
+                return sortedProducts.sort((a, b) => b.price - a.price);
+            case 'name_asc':
+                return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            case 'name_desc':
+                return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            default:
+                return sortedProducts;
+        }
+    }
+
+    function displayFullscreenAvailableItems(products) {
+        const container = document.getElementById('fullscreenAvailableItemsList');
+        const countElement = document.getElementById('fullscreenItemsCount');
+
+        if (products.length === 0) {
+            container.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="fa-solid fa-box-open fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No available items found</p>
+                    <p class="text-muted small">Check back later for new items or try different filters</p>
+                </div>
+            `;
+            countElement.textContent = '0 items';
+            return;
+        }
+
+        countElement.textContent = `${products.length} items`;
+
+        container.innerHTML = products.map(product => `
+            <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                <div class="card h-100 product-card">
+                    <div class="position-relative">
+                        <img src="${product.imagePath || 'https://via.placeholder.com/300x200?text=No+Image'}"
+                             class="card-img-top" alt="${product.name}"
+                             style="height: 200px; object-fit: cover;">
+                        <span class="position-absolute top-0 end-0 m-2 badge ${getTypeBadgeClass(product.type)}">
+                            ${product.type}
+                        </span>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text flex-grow-1">${product.description || 'No description available'}</p>
+
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-secondary">${product.category}</span>
+                                <span class="text-primary fw-bold">₹${product.price}</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fa-solid fa-user me-1"></i>
+                                    ${product.user ? (product.user.firstName || 'User') : 'User'}
+                                </small>
+                                <small class="text-muted">
+                                    ${product.createdAt ? new Date(product.createdAt).toLocaleDateString() : 'Unknown date'}
+                                </small>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary btn-sm" onclick="viewItemDetails(${product.id})">
+                                    <i class="fa-solid fa-eye me-1"></i> View Details
+                                </button>
+                                <button class="btn btn-primary btn-sm" onclick="contactSeller(${product.id})">
+                                    <i class="fa-solid fa-message me-1"></i> Contact Seller
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function getTypeBadgeClass(type) {
+        switch(type) {
+            case 'Donate': return 'bg-success';
+            case 'Exchange': return 'bg-warning';
+            case 'Resell': return 'bg-info';
+            default: return 'bg-secondary';
+        }
+    }
+
+    function filterFullscreenAvailableItems() {
+        const type = document.getElementById('fullscreenItemTypeFilter').value;
+        const category = document.getElementById('fullscreenCategoryFilter').value;
+        const sort = document.getElementById('fullscreenSortFilter').value;
+
+        loadFullscreenAvailableItems(type, category, sort);
+    }
+
+    // Function to show item details in a modal
+    function viewItemDetails(productId) {
+        const token = localStorage.getItem('jwtToken');
+
+        // Show loading state
+        document.getElementById('productDetailContent').innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted mt-3">Loading product details...</p>
+            </div>
+        `;
+
+        // Create modal instance
+        const productModal = new bootstrap.Modal(document.getElementById('productDetailModal'));
+        productModal.show();
+
+        // Fetch product details from your actual database
+        fetch(`/api/products/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Product not found');
+            }
+            return response.json();
+        })
+        .then(product => {
+            currentProductDetails = product;
+            displayProductDetails(product);
+        })
+        .catch(error => {
+            console.error('Error loading product details:', error);
+            document.getElementById('productDetailContent').innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fa-solid fa-exclamation-triangle me-2"></i>
+                    Failed to load product details. Please try again.
+                </div>
+            `;
+        });
+    }
+
+    // Function to display product details in modal
+    function displayProductDetails(product) {
+        const modalContent = document.getElementById('productDetailContent');
+
+        modalContent.innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="${product.imagePath || 'https://via.placeholder.com/400x300?text=No+Image'}"
+                         class="product-detail-image w-100" alt="${product.name}">
+                </div>
+                <div class="col-md-6">
+                    <h4 class="text-primary mb-3">${product.name}</h4>
+                    <p class="text-muted mb-4">${product.description || 'No description available'}</p>
+
+                    <div class="product-info-list">
+                        <div class="product-info-item">
+                            <span class="product-info-label">Price:</span>
+                            <span class="product-info-value text-primary fw-bold">₹${product.price}</span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Type:</span>
+                            <span class="product-info-value">
+                                <span class="badge ${getTypeBadgeClass(product.type)}">${product.type}</span>
+                            </span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Category:</span>
+                            <span class="product-info-value">
+                                <span class="badge bg-secondary">${product.category}</span>
+                            </span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Status:</span>
+                            <span class="product-info-value">
+                                <span class="badge ${getStatusBadgeClass(product.status)}">${product.status}</span>
+                            </span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Listed On:</span>
+                            <span class="product-info-value">
+                                ${product.createdAt ? new Date(product.createdAt).toLocaleDateString() : 'Unknown date'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="seller-info">
+                        <h6 class="mb-3"><i class="fa-solid fa-user me-2"></i>Seller Information</h6>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Name:</span>
+                            <span class="product-info-value">
+                                ${product.user ? (product.user.firstName + ' ' + (product.user.lastName || '')) : 'Unknown User'}
+                            </span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Email:</span>
+                            <span class="product-info-value">
+                                ${product.user ? product.user.email : 'Not available'}
+                            </span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Member Since:</span>
+                            <span class="product-info-value">
+                                ${product.user && product.user.createdAt ? new Date(product.user.createdAt).getFullYear() : '2024'}
+                            </span>
+                        </div>
+                        <div class="product-info-item">
+                            <span class="product-info-label">Rating:</span>
+                            <span class="product-info-value">
+                                <i class="fa-solid fa-star text-warning"></i>
+                                <i class="fa-solid fa-star text-warning"></i>
+                                <i class="fa-solid fa-star text-warning"></i>
+                                <i class="fa-solid fa-star text-warning"></i>
+                                <i class="fa-solid fa-star-half-alt text-warning"></i>
+                                4.8/5.0
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Update modal title
+        document.getElementById('productDetailModalLabel').textContent = product.name;
+    }
+
+    function contactSeller(productId) {
+        // You can implement a messaging system here
+        alert(`Contact seller for product ID: ${productId}\n\nThis feature will open a chat with the seller.`);
+    }
+
+    function contactSellerFromModal() {
+        if (currentProductDetails) {
+            contactSeller(currentProductDetails.id);
+        }
+    }
+
     // Initialize product form
     document.addEventListener('DOMContentLoaded', function() {
         const productForm = document.getElementById('addProductForm');
@@ -1083,28 +1717,28 @@
 
     // Function to update active nav state
     function updateNavActiveState(activeSection) {
-        // Remove active class from all nav links
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.classList.remove('active');
         });
 
-        // Add active class to the appropriate nav link
         switch(activeSection) {
             case 'dashboardHome':
-                navLinks[0].classList.add('active'); // Dashboard Home link
+                navLinks[0].classList.add('active');
                 break;
             case 'actions':
-                navLinks[1].classList.add('active'); // My Actions link
+                navLinks[1].classList.add('active');
                 break;
             case 'items':
-                navLinks[2].classList.add('active'); // My Items link
+                navLinks[2].classList.add('active');
+                break;
+            case 'available':
+                navLinks[3].classList.add('active');
                 break;
             case 'activity':
-                navLinks[3].classList.add('active'); // Activity link
+                navLinks[4].classList.add('active');
                 break;
             case 'profile':
-                // Profile is in dropdown, so we don't update nav for this
                 break;
         }
     }
@@ -1133,14 +1767,12 @@
                 return response.json();
             })
             .then(user => {
-                // Update profile fields
                 document.getElementById('profileFirstName').textContent = user.firstName || 'N/A';
                 document.getElementById('profileLastName').textContent = user.lastName || 'N/A';
                 document.getElementById('profileEmail').textContent = user.email || 'N/A';
                 document.getElementById('profileId').textContent = user.id || 'N/A';
                 document.getElementById('userName').textContent = user.firstName || 'User';
 
-                // Check if user is admin and update UI accordingly
                 if (user.admin) {
                     document.getElementById('adminBadge').style.display = 'inline';
                     document.getElementById('adminLink').style.display = 'block';
@@ -1156,23 +1788,26 @@
 
     // Logout function
     function logout() {
-        fetch('/api/auth/logout', {
-            method: 'POST',
-            credentials: 'include'
-        })
-        .then(() => {
-            localStorage.removeItem('jwtToken');
-            window.location.href = '/';
-        })
-        .catch(error => {
-            console.error('Logout error:', error);
-            localStorage.removeItem('jwtToken');
-            window.location.href = '/';
-        });
+        if (confirm('Are you sure you want to logout?')) {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            })
+            .then(() => {
+                localStorage.removeItem('jwtToken');
+                window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+                localStorage.removeItem('jwtToken');
+                window.location.href = '/';
+            });
+        }
     }
 
     // Initialize dashboard stats
     function initializeStats() {
+        // You can add actual API calls here to get real stats
         document.getElementById('donationsCount').textContent = '0';
         document.getElementById('exchangesCount').textContent = '0';
         document.getElementById('salesCount').textContent = '0';
@@ -1199,6 +1834,13 @@
     document.addEventListener('click', (e) => {
         if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
             e.preventDefault();
+        }
+    });
+
+    // Close fullscreen when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('fullscreen-available')) {
+            closeFullscreenAvailableItems();
         }
     });
 </script>
